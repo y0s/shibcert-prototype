@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  get_at: 2015-08-18 13:30:01
+  expire_at: 2015-08-18 13:30:01
+  pin: MyString
+  pin_get_at: 2015-08-18 13:30:01
+  user_id: 1
+  cert_state_id: 1
+  cert_type_id: 1
+
+two:
+  name: MyString
+  get_at: 2015-08-18 13:30:01
+  expire_at: 2015-08-18 13:30:01
+  pin: MyString
+  pin_get_at: 2015-08-18 13:30:01
+  user_id: 1
+  cert_state_id: 1
+  cert_type_id: 1

@@ -1,4 +1,14 @@
 Shibcert::Application.routes.draw do
+  resources :certs
+
+  resources :cert_states
+
+  resources :cert_types
+
+  resources :users
+
+  resources :roles
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @cert.name %>
+</p>
+
+<p>
+  <strong>Get at:</strong>
+  <%= @cert.get_at %>
+</p>
+
+<p>
+  <strong>Expire at:</strong>
+  <%= @cert.expire_at %>
+</p>
+
+<p>
+  <strong>Pin:</strong>
+  <%= @cert.pin %>
+</p>
+
+<p>
+  <strong>Pin get at:</strong>
+  <%= @cert.pin_get_at %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @cert.user_id %>
+</p>
+
+<p>
+  <strong>Cert state:</strong>
+  <%= @cert.cert_state_id %>
+</p>
+
+<p>
+  <strong>Cert type:</strong>
+  <%= @cert.cert_type_id %>
+</p>
+
+<%= link_to 'Edit', edit_cert_path(@cert) %> |
+<%= link_to 'Back', certs_path %>
