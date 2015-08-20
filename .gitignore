@@ -18,3 +18,6 @@
 /log/*.log
 /tmp
 
+# Ignore emacs backup
+*~
+

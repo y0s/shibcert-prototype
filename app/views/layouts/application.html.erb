@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Shibcert</title>
+  <title>個人証明書発行システム</title>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-<%= yield %>
-
+  <div class="navbar">
+	<div class="navbar-inner">
+	  <div class="container">
+		<span class="brand">個人証明書発行システム</span>
+	  </div>
+	</div>
+  </div>
+  <div class="container">
+	<%= yield %>
+  </div>
 </body>
 </html>
