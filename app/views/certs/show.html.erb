@@ -1,44 +1,28 @@
-<p id="notice"><%= notice %></p>
-
+<h3>証明書の詳細</h3>
 <p>
-  <strong>Name:</strong>
-  <%= @cert.name %>
+  <strong>発行の状況</strong>
 </p>
-
 <p>
-  <strong>Get at:</strong>
+  <strong>PIN番号</strong>
+  <% if @cert.pin %>
+  <%= @cert.pin %>
+  <% else %>
+  まだPIN番号は発行されていません。申請完了メール送信までお待ちください。
+  <% end %>
+</p>
+<p>
+  <strong>発行日時</strong>
   <%= @cert.get_at %>
 </p>
 
 <p>
-  <strong>Expire at:</strong>
+  <strong>有効期限</strong>
   <%= @cert.expire_at %>
 </p>
 
 <p>
-  <strong>Pin:</strong>
-  <%= @cert.pin %>
+  <strong>証明書タイプ</strong>
 </p>
 
-<p>
-  <strong>Pin get at:</strong>
-  <%= @cert.pin_get_at %>
-</p>
+<%= link_to 'ポータルのトップページに戻る', {controller: "portal", action: "index"} %>
 
-<p>
-  <strong>User:</strong>
-  <%= @cert.user_id %>
-</p>
-
-<p>
-  <strong>Cert state:</strong>
-  <%= @cert.cert_state_id %>
-</p>
-
-<p>
-  <strong>Cert type:</strong>
-  <%= @cert.cert_type_id %>
-</p>
-
-<%= link_to 'Edit', edit_cert_path(@cert) %> |
-<%= link_to 'Back', certs_path %>

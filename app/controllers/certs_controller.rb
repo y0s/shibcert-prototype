@@ -1,3 +1,4 @@
+# coding: utf-8
 class CertsController < ApplicationController
   before_action :set_cert, only: [:show, :edit, :update, :destroy]
 
@@ -10,6 +11,26 @@ class CertsController < ApplicationController
   # GET /certs/1
   # GET /certs/1.json
   def show
+    # FIXME: user authorization needed
+  end
+
+  # GET /certs/request_select
+  # [memo] "request" is reserved by rails system
+  def request_select
+  end
+
+  # POST /certs/request_result
+  def request_result
+    uid = SESSION_USER_DUMMY_ID
+    cs = CertState.new
+    cs.save
+    ct = CertType.new
+    ct.save
+    
+    request_params = {user_id: uid, cert_state_id: cs.id, cert_type_id: ct.id}
+    @cert = Cert.new(request_params)
+    @cert.save
+    @new_cert_id = @cert.id
   end
 
   # GET /certs/new

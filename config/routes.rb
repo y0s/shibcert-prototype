@@ -1,6 +1,8 @@
 Shibcert::Application.routes.draw do
   get "portal/index"
-
+  get "certs/request_select"
+  post "certs/request_result"
+  
   resources :certs
 
   resources :cert_states
@@ -10,8 +12,6 @@ Shibcert::Application.routes.draw do
   resources :users
 
   resources :roles
-
-  resources :requests
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
