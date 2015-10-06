@@ -3,9 +3,9 @@
   証明書の発行元(国立情報学研究所)に対する発行申請を行いました。<br>
   発行が完了すると、大学のアドレスに対してメールが届きます。<br>
   証明書の利用には、送信されたメールの他に、<b>PIN(Personal Identification Number)</b>が必要となります。<br>
-  PINは発行完了後の一定期間、本ポータルの申請書情報確認画面で確認できます。</p>
+  PINは発行完了後の一定期間、本ポータルの証明書情報確認画面で確認できます。</p>
 <p>
-  <%= link_to '申請書確認画面へ移動する', {controller: "certs", action: "show", id: @new_cert_id}, class: "btn" %>
+  <%= link_to '申請した証明書の情報を確認する', {controller: "certs", action: "show", id: @new_cert_id}, class: "btn" %>
 </p>
 <p>
   <%= link_to 'ポータルのトップページへ戻る', {controller: "portal", action: "index"} %>

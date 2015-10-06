@@ -1,6 +1,17 @@
 <h3>証明書の詳細</h3>
 <p>
   <strong>発行の状況</strong>
+  <% if @cert.state == 0 %>
+  申請中です。
+  <% elsif @cert.state == nil or 4 %>
+  申請・発行に問題が発生しています。担当部署までお問い合わせ下さい。
+  <% elsif @cert.state == 1 %>
+  発行完了済・有効です。
+  <% elsif @cert.state == 2 %>
+  発行完了済・期限切れのため無効です。
+  <% elsif @cert.state == 3 %>
+  発行完了済・利用者自身により無効化されました。
+  <% end %>
 </p>
 <p>
   <strong>PIN番号</strong>
@@ -23,6 +34,13 @@
 <p>
   <strong>証明書タイプ</strong>
 </p>
+  <%= form_tag({controller: "certs", action: "edit_name_remote", id: @cert.id}, remote: true) do %>
+  <strong>用途メモ</strong>
+  <%= text_field :cert, :name, placeholder: "(例)iPhoneのメール暗号化用" %>
+  <%= submit_tag "メモを保存" %>
+  <% end %>
+</p>
+
 
 <%= link_to 'ポータルのトップページに戻る', {controller: "portal", action: "index"} %>
 

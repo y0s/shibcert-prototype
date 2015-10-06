@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150818043001) do
+ActiveRecord::Schema.define(version: 20151006021631) do
 
   create_table "cert_states", force: true do |t|
     t.string   "name"
@@ -36,6 +36,8 @@ ActiveRecord::Schema.define(version: 20150818043001) do
     t.integer  "cert_type_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "state"
+    t.integer  "purpose_type"
   end
 
   create_table "roles", force: true do |t|

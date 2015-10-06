@@ -1,6 +1,6 @@
 # coding: utf-8
 class CertsController < ApplicationController
-  before_action :set_cert, only: [:show, :edit, :update, :destroy]
+  before_action :set_cert, only: [:show, :edit, :update, :destroy, :edit_name_remote]
 
   # GET /certs
   # GET /certs.json
@@ -22,12 +22,10 @@ class CertsController < ApplicationController
   # POST /certs/request_result
   def request_result
     uid = SESSION_USER_DUMMY_ID
-    cs = CertState.new
-    cs.save
-    ct = CertType.new
-    ct.save
-    
-    request_params = {user_id: uid, cert_state_id: cs.id, cert_type_id: ct.id}
+    # state: 0 => now requesting, 1 => issued, 2 => issued but expired,
+    #        3 => invadidated, 4 => error
+    # type: 0 => KUINS, 1 => MAIL
+    request_params = {user_id: uid, state: 0, purpose_type: 0}
     @cert = Cert.new(request_params)
     @cert.save
     @new_cert_id = @cert.id
@@ -40,6 +38,14 @@ class CertsController < ApplicationController
 
   # GET /certs/1/edit
   def edit
+  end
+
+  # POST /certs/1/edit_name_remote
+  def edit_name_remote
+    #    @cert.update('name = ' + params[:name])
+    #    @cert.update_attributes = {name: params[:name]}
+    @cert.attributes = params.require(:cert).permit(:name)
+    @cert.save
   end
 
   # POST /certs
