@@ -1,14 +1,14 @@
 <h3>申請する証明書の選択</h3>
 <p>
   <%= form_tag controller: "certs", action: "request_result" do %>
-  <%= hidden_field_tag "cert_type", "1" %>
+  <%= hidden_field :cert, :purpose_type, :value => 5 %>
   <%= submit_tag "KUINS接続用証明書する", class: "btn" %> (KUINS-Air(学内WiFi)や、PPTP(VPN)などの接続用
   <% end %>
 </p>
 
 <p>
   <%= form_tag controller: "certs", action: "request_result" do  %>
-  <%= hidden_field_tag "cert_type", "2" %>
+  <%= hidden_field :cert, :purpose_type, :value => 7 %>  
   <%= submit_tag "メール暗号化用証明書申請する", class: "btn" %> (全学メール用のS/MIME申請書)
   <% end %>
 </p>

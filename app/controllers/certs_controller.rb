@@ -23,9 +23,11 @@ class CertsController < ApplicationController
   def request_result
     uid = SESSION_USER_DUMMY_ID
     # state: 0 => now requesting, 1 => issued, 2 => issued but expired,
-    #        3 => invadidated, 4 => error
-    # type: 0 => KUINS, 1 => MAIL
-    request_params = {user_id: uid, state: 0, purpose_type: 0}
+    #        3 => invadidated, -1 => error
+    # purpose_type: profile ID of
+    #   https://certs.nii.ac.jp/archive/TSV_File_Format/client_tsv/ 
+
+    request_params = params.require(:cert).permit(:purpose_type).merge({user_id: uid, state: 0})
     @cert = Cert.new(request_params)
     @cert.save
     @new_cert_id = @cert.id
@@ -96,6 +98,6 @@ class CertsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def cert_params
-      params.require(:cert).permit(:name, :get_at, :expire_at, :pin, :pin_get_at, :user_id, :cert_state_id, :cert_type_id)
+      params.require(:cert).permit(:name, :get_at, :expire_at, :pin, :pin_get_at, :user_id, :cert_state_id, :cert_type_id, :purpose_type)
     end
 end

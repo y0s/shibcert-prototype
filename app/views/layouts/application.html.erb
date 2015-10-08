@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>個人証明書発行システム</title>
+  <title><%= SHIBCERT_CONFIG['site_title_j']  %></title>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
@@ -13,9 +13,22 @@
   <div class="navbar navbar">
 	<div class="navbar-inner">
 	  <div class="container">
-		<span class="brand">個人証明書発行システム</span>
-		<% if uid.present? %>		
-		<p class="navbar-text pull-right">[<%= uid %>としてログイン中] <%= link_to "ログアウト", {controller: "portal", action: "index"} %></p>
+		<span class="brand"><%= SHIBCERT_CONFIG['caption_j']['site_title'] %></span>
+		<% if uid.present? %>
+		<ul class="nav pull-right">
+		  <li><span class="navbar-text">[<%= uid %>]</span></li>
+		  <li class="divider-vertical"></li>
+		  <li class="dropdown">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown">メニュー</a>
+			<ul class="dropdown-menu"> 
+			  <li><%= link_to "ヘルプ",
+					  {controller: "portal", action: "index"} %>
+			  <li><%= link_to "ログアウト",
+					  {controller: "portal", action: "index"} %>
+			  <li>
+			</ul>
+		  </li>
+		</ul>			
 		<% end %>
 	  </div>
 	</div>

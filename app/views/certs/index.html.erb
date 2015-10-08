@@ -3,23 +3,43 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>Name</th>
-      <th>取得日</th>
-      <th>期限</th>
-      <th>Pin</th>
-      <th></th>
+      <th>証明書タイプ</th>
+      <th>申請日</th>
+      <th>有効/無効</th>
+      <th>メモ</th>
       <th></th>
     </tr>
   </thead>
 
   <tbody>
     <% @certs.each do |cert| %>
-      <tr>
-        <td><%= cert.name %></td>
-        <td><%= cert.get_at %></td>
-        <td><%= cert.expire_at %></td>
-        <td><%= cert.pin %></td>
-        <td><%= link_to '詳細', {action: "show", id: cert.id}, {class: "btn"} %></td>
+    <tr>
+	  <td>
+		<% purpose_cap = SHIBCERT_CONFIG['caption_j']['purpose_type_short'] %>
+		<% if purpose_cap[cert.purpose_type] %>
+		<%= purpose_cap[cert.purpose_type] %>
+		<% else %>  
+		証明書タイプに問題が発生しています。<br>担当部署までお問い合わせ下さい。
+		<% end %>
+	  </td>
+      <td><%= cert.created_at.strftime("%Y年%m月%d日") %></td>
+      <td>
+		<% if cert.pin_get_at and cert.expire_at %>
+		  <% if Time.now > cert.expire_at %>		
+	  	    <span style="color:green;">期限切れ</span>
+		  <% else %>
+		    <% if Time.now > cert.expire_at %>				
+		      <span style="color:red;">有効</span>
+		    <% else %>
+		      <span style="color:gray;">無効</span>		
+		    <% end %>
+		  <% end %>
+		<% else %>		
+		<span style="color:gray;">未発行</span>
+		<% end %>
+	  </td>
+      <td><%= cert.name %></td>		
+      <td><%= link_to '詳細', {action: "show", id: cert.id}, {class: "btn"} %></td>
       </tr>
     <% end %>
   </tbody>
