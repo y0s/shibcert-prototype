@@ -36,8 +36,8 @@
 	<%= yield %>	
 	<% else %>
 	<div class="omniauth">
-      <%= link_to "Sign in with Gakunin", "/auth/shibboleth" %> or
-      <%= link_to "Sign in with GitHub", "/auth/github" %>
+      学内IDを使って<%= link_to "ログイン", "/auth/shibboleth" %><br>
+      他サービスでログインする <%= link_to "GitHub", "/auth/github" %>
 	</div>
     <% end %>
   </div>

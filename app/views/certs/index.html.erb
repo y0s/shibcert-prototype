@@ -12,6 +12,7 @@
   </thead>
 
   <tbody>
+
     <% @certs.each do |cert| %>
     <tr>
 	  <td>
@@ -44,7 +45,6 @@
     <% end %>
   </tbody>
 </table>
-
 <br>
 
 <%= link_to 'ポータルのトップページへ戻る', {controller: "portal", action: "index"} %>

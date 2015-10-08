@@ -1,5 +1,6 @@
 <h3>証明書の詳細</h3>
 
+<% if @cert %>
 <table class="table">
   <tr>
 	<td><strong>証明書タイプ</strong></td>
@@ -81,6 +82,9 @@
 	</td>
   </tr>
 </table>
+<% else %>
+<p> 指定された証明書が存在しません。何らかのエラーの可能性がありますので、管理担当者までご連絡下さい。</p>
+<% end %>
 
 <%= link_to 'ポータルのトップページに戻る', {controller: "portal", action: "index"} %>
 
