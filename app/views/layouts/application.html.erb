@@ -1,6 +1,3 @@
-<% if SESSION_USER_DUMMY.present? %>
-<% uid = SESSION_USER_DUMMY_ID %>
-<% end %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,40 +11,35 @@
 	<div class="navbar-inner">
 	  <div class="container">
 		<span class="brand"><%= SHIBCERT_CONFIG['caption_j']['site_title'] %></span>
-		<% if uid.present? %>
+		<% if current_user %>		
 		<ul class="nav pull-right">
-		  <li><span class="navbar-text">[<%= uid %>]</span></li>
+		  <li>
+			<span class="navbar-text">ユーザー<%= current_user.name %></span>
+		  </li>
 		  <li class="divider-vertical"></li>
 		  <li class="dropdown">
 			<a href="#" class="dropdown-toggle" data-toggle="dropdown">メニュー</a>
 			<ul class="dropdown-menu"> 
 			  <li><%= link_to "ヘルプ",
 					  {controller: "portal", action: "index"} %>
-			  <li><%= link_to "ログアウト",
-					  {controller: "portal", action: "index"} %>
+			  <li><%= link_to "ログアウト", signout_path %>				
 			  <li>
 			</ul>
 		  </li>
-		</ul>			
+		</ul>
 		<% end %>
 	  </div>
-	  <% if current_user %>
-	  Welcome, <%= current_user.name %>!
-          <%= link_to "Sign Out", signout_path %>
-	  <% else %>
-	  <div class="omniauth">
-                <%= link_to "Sign in with Gakunin", "/auth/shibboleth" %> or
-                <%= link_to "Sign in with GitHub", "/auth/github" %>
-	  </div>
-          <% end %>
 	</div>
   </div>
   <div class="container">
-	<% if uid.present? %>			
-	<%= yield %>
+	<% if current_user %>
+	<%= yield %>	
 	<% else %>
-	<p>ログインして下さい</p>
-	<% end %>
+	<div class="omniauth">
+      <%= link_to "Sign in with Gakunin", "/auth/shibboleth" %> or
+      <%= link_to "Sign in with GitHub", "/auth/github" %>
+	</div>
+    <% end %>
   </div>
 </body>
 </html>
