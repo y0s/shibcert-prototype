@@ -1,17 +1,12 @@
-<h1>Listing certs</h1>
+<h3>あなたの証明書一覧</h3>
 
-<table>
+<table class="table table-striped">
   <thead>
     <tr>
       <th>Name</th>
-      <th>Get at</th>
-      <th>Expire at</th>
+      <th>取得日</th>
+      <th>期限</th>
       <th>Pin</th>
-      <th>Pin get at</th>
-      <th>User</th>
-      <th>Cert state</th>
-      <th>Cert type</th>
-      <th></th>
       <th></th>
       <th></th>
     </tr>
@@ -24,13 +19,7 @@
         <td><%= cert.get_at %></td>
         <td><%= cert.expire_at %></td>
         <td><%= cert.pin %></td>
-        <td><%= cert.pin_get_at %></td>
-        <td><%= cert.user_id %></td>
-        <td><%= cert.cert_state_id %></td>
-        <td><%= cert.cert_type_id %></td>
-        <td><%= link_to 'Show', cert %></td>
-        <td><%= link_to 'Edit', edit_cert_path(cert) %></td>
-        <td><%= link_to 'Destroy', cert, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to '詳細', {action: "show", id: cert.id}, {class: "btn"} %></td>
       </tr>
     <% end %>
   </tbody>
@@ -38,4 +27,4 @@
 
 <br>
 
-<%= link_to 'New Cert', new_cert_path %>
+<%= link_to 'ポータルのトップページへ戻る', {controller: "portal", action: "index"} %>

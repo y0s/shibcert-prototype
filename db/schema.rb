@@ -36,6 +36,8 @@ ActiveRecord::Schema.define(version: 20151007062745) do
     t.integer  "cert_type_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "state"
+    t.integer  "purpose_type"
   end
 
   create_table "roles", force: true do |t|

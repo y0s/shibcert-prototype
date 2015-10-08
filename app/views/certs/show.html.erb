@@ -1,44 +1,46 @@
-<p id="notice"><%= notice %></p>
-
+<h3>証明書の詳細</h3>
 <p>
-  <strong>Name:</strong>
-  <%= @cert.name %>
+  <strong>発行の状況</strong>
+  <% if @cert.state == 0 %>
+  申請中です。
+  <% elsif @cert.state == nil or 4 %>
+  申請・発行に問題が発生しています。担当部署までお問い合わせ下さい。
+  <% elsif @cert.state == 1 %>
+  発行完了済・有効です。
+  <% elsif @cert.state == 2 %>
+  発行完了済・期限切れのため無効です。
+  <% elsif @cert.state == 3 %>
+  発行完了済・利用者自身により無効化されました。
+  <% end %>
 </p>
-
 <p>
-  <strong>Get at:</strong>
+  <strong>PIN番号</strong>
+  <% if @cert.pin %>
+  <%= @cert.pin %>
+  <% else %>
+  まだPIN番号は発行されていません。申請完了メール送信までお待ちください。
+  <% end %>
+</p>
+<p>
+  <strong>発行日時</strong>
   <%= @cert.get_at %>
 </p>
 
 <p>
-  <strong>Expire at:</strong>
+  <strong>有効期限</strong>
   <%= @cert.expire_at %>
 </p>
 
 <p>
-  <strong>Pin:</strong>
-  <%= @cert.pin %>
+  <strong>証明書タイプ</strong>
+</p>
+  <%= form_tag({controller: "certs", action: "edit_name_remote", id: @cert.id}, remote: true) do %>
+  <strong>用途メモ</strong>
+  <%= text_field :cert, :name, placeholder: "(例)iPhoneのメール暗号化用" %>
+  <%= submit_tag "メモを保存" %>
+  <% end %>
 </p>
 
-<p>
-  <strong>Pin get at:</strong>
-  <%= @cert.pin_get_at %>
-</p>
 
-<p>
-  <strong>User:</strong>
-  <%= @cert.user_id %>
-</p>
+<%= link_to 'ポータルのトップページに戻る', {controller: "portal", action: "index"} %>
 
-<p>
-  <strong>Cert state:</strong>
-  <%= @cert.cert_state_id %>
-</p>
-
-<p>
-  <strong>Cert type:</strong>
-  <%= @cert.cert_type_id %>
-</p>
-
-<%= link_to 'Edit', edit_cert_path(@cert) %> |
-<%= link_to 'Back', certs_path %>

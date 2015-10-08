@@ -1,3 +1,6 @@
+<% if SESSION_USER_DUMMY.present? %>
+<% uid = SESSION_USER_DUMMY_ID %>
+<% end %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,10 +10,13 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <div class="navbar">
+  <div class="navbar navbar">
 	<div class="navbar-inner">
 	  <div class="container">
 		<span class="brand">個人証明書発行システム</span>
+		<% if uid.present? %>		
+		<p class="navbar-text pull-right">[<%= uid %>としてログイン中] <%= link_to "ログアウト", {controller: "portal", action: "index"} %></p>
+		<% end %>
 	  </div>
 	  <% if current_user %>
 	  Welcome, <%= current_user.name %>!
@@ -24,7 +30,11 @@
 	</div>
   </div>
   <div class="container">
+	<% if uid.present? %>			
 	<%= yield %>
+	<% else %>
+	<p>ログインして下さい</p>
+	<% end %>
   </div>
 </body>
 </html>

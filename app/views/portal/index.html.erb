@@ -1,4 +1,16 @@
+<% if SESSION_USER_DUMMY.present? %>
+<% uid = SESSION_USER_DUMMY_ID %>
+<% end %>
+
+<h3>トップページ</h3>
 <p>このサイトはNIIが発行する個人証明書の発行申請・管理を行うサイトです。</p>
 
-<p><%= link_to "発行申請", {controller: "requests", action: "new"}, {class: "btn btn-primary"} %></p>
-<p>証明書管理</p>
+<% if uid.present? %>
+<p><%= link_to "発行申請", {controller: "certs", action: "request_select"}, {class: "btn"} %></p>
+<p><%= link_to "証明書管理", {controller: "certs", action: "index"}, {class: "btn"} %></p>
+
+<% else %>
+<p>ログインして下さい</p>
+<h3>トップページ</h3>
+<p><%= link_to "ログイン（未実装）", {action: "index"}, {class: "btn btn-primary"} %></p>
+<% end %>

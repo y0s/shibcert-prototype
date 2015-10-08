@@ -2,8 +2,14 @@ Shibcert::Application.routes.draw do
   root "portal#index"
 
   get "portal/index"
-
-  resources :certs
+  get "certs/request_select"
+  post "certs/request_result"
+  
+  resources :certs do
+    member do
+      post "edit_name_remote"
+    end
+  end
 
   resources :cert_states
 
