@@ -6,11 +6,11 @@ caption_j:
   purpose_type:
     # 4: Client Certification SHA1, 5: Client Certification SHA1
     # 6: S/MIME Certificatino SHA2, 7: S/MIME Certification SHA2
-    5: "学内ネットワーク(KUINS)認証用クライアント証明書"  
-    7: "全学メール(KUMAIL,KUMOI)用S/MIME証明書"
+    5: "学内ネットワーク(KUINS)認証用 クライアント証明書"  
+    7: "全学メール(KUMAIL,KUMOI)用 S/MIME証明書"
   purpose_type_short:
-    5: "KUIN用クライアント証明書"  
-    7: "全学メール用S/MIME証明書"
+    5: "KUINS用 クライアント証明書"  
+    7: "全学メール用 S/MIME証明書"
 caption_e:
   site_title: "Kyoto University Personal Certification Application System"  
   purpose_type:

@@ -7,28 +7,27 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <div class="navbar navbar">
-	<div class="navbar-inner">
-	  <div class="container">
-		<span class="brand"><%= SHIBCERT_CONFIG['caption_j']['site_title'] %></span>
-		<% if current_user %>		
-		<ul class="nav pull-right">
-		  <li>
-			<span class="navbar-text">ユーザー<%= current_user.name %></span>
-		  </li>
-		  <li class="divider-vertical"></li>
+  <div class="navbar navbar-default" role="navigation">
+	<div class="container-fluid">	
+	  <div class="navbar-header">
+		<%= link_to SHIBCERT_CONFIG['caption_j']['site_title'],
+			{controller: "portal", action: "index"}, class: "navbar-brand" %>
+	  </div>
+	  <% if current_user %>
+	  <div class="collapse navbar-collapse">
+		<ul class="nav navbar-nav navbar-right">
+		  <li><p class="navbar-text">ユーザー<%= current_user.name %></p></li>
 		  <li class="dropdown">
-			<a href="#" class="dropdown-toggle" data-toggle="dropdown">メニュー</a>
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" >アカウントメニュー<span class="caret"></a>
 			<ul class="dropdown-menu"> 
 			  <li><%= link_to "ヘルプ",
-					  {controller: "portal", action: "index"} %>
-			  <li><%= link_to "ログアウト", signout_path %>				
-			  <li>
+					  {controller: "portal", action: "index"} %></li>
+			  <li><%= link_to "ログアウト", signout_path %></li>	
 			</ul>
 		  </li>
 		</ul>
-		<% end %>
 	  </div>
+	  <% end %>
 	</div>
   </div>
   <div class="container">

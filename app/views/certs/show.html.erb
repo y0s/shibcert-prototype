@@ -74,9 +74,8 @@
 	<td>
 	  <%= form_tag({controller: "certs", action: "edit_name_remote", id: @cert.id, }, remote: true, class: "form-inline") do %>
 	  <div class ="form-group">
-		
 		<%= text_field :cert, :name, placeholder: "(例)iPhoneのメール暗号化用" %>
-		<%= submit_tag "メモを保存" %>
+		<%= submit_tag "メモを保存", class:"btn btn-xs btn-default" %>
 	  </div>
 	  <% end %>
 	</td>

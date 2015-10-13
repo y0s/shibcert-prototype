@@ -3,11 +3,11 @@
 <% end %>
 
 <h3>トップページ</h3>
-<p>このサイトはNIIが発行する個人証明書の発行申請・管理を行うサイトです。</p>
+<p>このシステムでは国立情報学研究所(NII)が発行する個人証明書の発行申請・管理が行えます。</p>
 
 <% if uid.present? %>
-<p><%= link_to "発行申請", {controller: "certs", action: "request_select"}, {class: "btn"} %></p>
-<p><%= link_to "証明書管理", {controller: "certs", action: "index"}, {class: "btn"} %></p>
+<p><%= link_to "発行申請画面", {controller: "certs", action: "request_select"}, {class: "btn btn-default"} %></p>
+<p><%= link_to "証明書管理画面", {controller: "certs", action: "index"}, {class: "btn btn-default"} %></p>
 
 <% else %>
 <p>ログインして下さい</p>
