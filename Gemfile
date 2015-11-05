@@ -55,3 +55,7 @@ gem 'passenger'
 
 gem 'omniauth-github'
 gem 'omniauth-shibboleth'
+
+gem 'mechanize'
+gem 'mail'
+gem 'zipruby'
