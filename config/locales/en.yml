@@ -20,4 +20,8 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  top:
+    title: "Top Page"
+    text: "You can apply for certification provided by NII and manage them on this system"
+    req_btn: "Apply for Issue of Certification"
+    cert_mng_btn: "Manage Certifications"

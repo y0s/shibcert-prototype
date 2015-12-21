@@ -1,0 +1,50 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+ja:
+  top:
+    title: "トップページ"
+    text: "このシステムでは国立情報学研究所(NII)が発行する個人証明書の発行申請・管理が行えます。"
+    req_btn: "発行申請画面"
+    cert_mng_btn: "証明書管理画面"
+  nav:
+    user: "ユーザー"
+    menu: "アカウントメニュー"    
+    help: "ヘルプ"    
+    logout: "ログアウト"
+  login:
+    logintext: "学内IDで"
+    otherlogintext: "他のサービスを使って"    
+    loginlink: "ログイン"
+  common:
+    backlink: "キャンセルして戻る"    
+  req_sel:
+    title: "証明書の種類を選択して申請"
+    confirm: "発行元(国立情報学研究所)に申請を送信します。よろしいですか？"
+    linktext: "を申請する"    
+  req_result:
+    title: "申請完了"
+    text_html: "証明書の発行元(国立情報学研究所)に対する発行申請を行いました。<br>
+    発行が完了すると、大学のアドレスに対してメールが届きます。<br>
+    証明書の利用には、送信されたメールの他に、<b>PIN(Personal Identification Number)</b>が必要となります。<br>
+    PINは発行完了後の一定期間、本ポータルの証明書情報確認画面で確認できます。"
+    showlink: "証明書情報確認"
+    

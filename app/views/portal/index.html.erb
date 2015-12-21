@@ -1,16 +1,7 @@
-<% if SESSION_USER_DUMMY.present? %>
-<% uid = SESSION_USER_DUMMY_ID %>
-<% end %>
+<h3><%= t('top.title') %></h3>
+<p><%= t('top.text') %></p>
 
-<h3>トップページ</h3>
-<p>このシステムでは国立情報学研究所(NII)が発行する個人証明書の発行申請・管理が行えます。</p>
+<p><%= link_to t('top.req_btn'), {controller: "certs", action: "request_select"}, {class: "btn btn-default"} %></p>
+<p><%= link_to t('top.cert_mng_btn'), {controller: "certs", action: "index"}, {class: "btn btn-default"} %></p>
 
-<% if uid.present? %>
-<p><%= link_to "発行申請画面", {controller: "certs", action: "request_select"}, {class: "btn btn-default"} %></p>
-<p><%= link_to "証明書管理画面", {controller: "certs", action: "index"}, {class: "btn btn-default"} %></p>
 
-<% else %>
-<p>ログインして下さい</p>
-<h3>トップページ</h3>
-<p><%= link_to "ログイン（未実装）", {action: "index"}, {class: "btn btn-primary"} %></p>
-<% end %>
