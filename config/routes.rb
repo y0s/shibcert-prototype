@@ -8,7 +8,7 @@ Shibcert::Application.routes.draw do
     
     resources :certs do
       member do
-        post "edit_name_remote"
+        post "edit_memo_remote"
       end
     end
     

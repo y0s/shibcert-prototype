@@ -1,7 +1,7 @@
 # coding: utf-8
 class CertsController < ApplicationController
   before_action :set_cert, only: [:edit, :update, :destroy]
-  before_action :set_cert_of_user, only: [:show, :edit_name_remote]
+  before_action :set_cert_of_user, only: [:show, :edit_memo_remote]
   # GET /certs
   # GET /certs.json
   def index
@@ -40,12 +40,12 @@ class CertsController < ApplicationController
   def edit
   end
 
-  # POST /certs/1/edit_name_remote
-  def edit_name_remote
-    #    @cert.update('name = ' + params[:name])
-    #    @cert.update_attributes = {name: params[:name]}
+  # POST /certs/1/edit_memo_remote
+  def edit_memo_remote
+    #    @cert.update('memo = ' + params[:memo])
+    #    @cert.update_attributes = {memo: params[:memo]}
     if @cert
-      @cert.attributes = params.require(:cert).permit(:name)
+      @cert.attributes = params.require(:cert).permit(:memo)
       @cert.save
     end
   end
@@ -112,6 +112,6 @@ class CertsController < ApplicationController
   
   # Never trust parameters from the scary internet, only allow the white list through.
     def cert_params
-      params.require(:cert).permit(:name, :get_at, :expire_at, :pin, :pin_get_at, :user_id, :cert_state_id, :cert_type_id, :purpose_type)
+      params.require(:cert).permit(:memo, :get_at, :expire_at, :pin, :pin_get_at, :user_id, :cert_state_id, :cert_type_id, :purpose_type)
     end
 end

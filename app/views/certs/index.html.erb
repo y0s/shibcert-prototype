@@ -39,7 +39,7 @@
 		<span style="color:gray;">未発行</span>
 		<% end %>
 	  </td>
-      <td><%= cert.name %></td>		
+      <td><%= cert.memo %></td>		
       <td><%= link_to '詳細', {action: "show", id: cert.id}, {class: "btn btn-default"} %></td>
       </tr>
     <% end %>

@@ -1,7 +1,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
+  memo: MyString
   get_at: 2015-08-18 13:30:01
   expire_at: 2015-08-18 13:30:01
   pin: MyString
@@ -9,9 +9,10 @@ one:
   user_id: 1
   cert_state_id: 1
   cert_type_id: 1
+  db: "CN=test01,OU=01,OU=IIMC,OU=Kyoto University,L=Academe,C=JP"
 
 two:
-  name: MyString
+  memo: MyString
   get_at: 2015-08-18 13:30:01
   expire_at: 2015-08-18 13:30:01
   pin: MyString
@@ -19,3 +20,4 @@ two:
   user_id: 1
   cert_state_id: 1
   cert_type_id: 1
+  db: "CN=test02,OU=02,OU=IIMC,OU=Kyoto University,L=Academe,C=JP"
