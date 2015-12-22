@@ -22,5 +22,9 @@ module Shibcert
 
     # for loading bootstrap 
     config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
+
+    # set default locale
+    config.i18n.default_locale = :ja
   end
 end
+

@@ -21,3 +21,9 @@ caption_e:
   purpose_type_short:
     5: "Client Cert for KUINS"  
     7: "S/MIME Cert for Campus Mail"
+
+
+development:
+  certificate_file: "config/certificates/client.cer"
+  certificate_key_file:  "config/certificates/client.key"
+

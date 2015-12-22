@@ -1,16 +1,16 @@
-<h3>申請する証明書の選択</h3>
+<h3><%= t('req_sel.title') %></h3>
 <p>
   <%= form_tag controller: "certs", action: "request_result" do %>
   <%= hidden_field :cert, :purpose_type, :value => 5 %>
-  <%= submit_tag SHIBCERT_CONFIG['caption_j']['purpose_type_short'][5] + "を申請する", class: "btn btn-default", data: {confirm: "発行元(国立情報学研究所)に申請を送信します。よろしいですか？"}  %> (KUINS-Air(学内WiFi)や、PPTP(VPN)などの接続用
+  <%= submit_tag SHIBCERT_CONFIG['caption_j']['purpose_type_short'][5] + t('req_sel.linktext'), class: "btn btn-primary", data: {confirm: t('req_sel.confirm')}  %> 
   <% end %>
 </p>
 
 <p>
   <%= form_tag controller: "certs", action: "request_result" do  %>
   <%= hidden_field :cert, :purpose_type, :value => 7 %>  
-  <%= submit_tag SHIBCERT_CONFIG['caption_j']['purpose_type_short'][7] + "を申請する", class: "btn btn-default" %> (全学メール用のS/MIME申請書)
+  <%= submit_tag SHIBCERT_CONFIG['caption_j']['purpose_type_short'][7] + t('req_sel.linktext'), class: "btn btn-primary", data: {confirm: t('req_sel.confirm')} %> 
   <% end %>
 </p>
 
-<%= link_to 'キャンセルして戻る', {controller: "portal", action: "index"} %>
+<%= link_to t('common.backlink'), {controller: "portal", action: "index"} %>
