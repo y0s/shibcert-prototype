@@ -18,7 +18,7 @@ class CertsControllerTest < ActionController::TestCase
 
   test "should create cert" do
     assert_difference('Cert.count') do
-      post :create, cert: { cert_state_id: @cert.cert_state_id, cert_type_id: @cert.cert_type_id, expire_at: @cert.expire_at, get_at: @cert.get_at, name: @cert.name, pin: @cert.pin, pin_get_at: @cert.pin_get_at, user_id: @cert.user_id }
+      post :create, cert: { cert_state_id: @cert.cert_state_id, cert_type_id: @cert.cert_type_id, expire_at: @cert.expire_at, get_at: @cert.get_at, memo: @cert.memo, pin: @cert.pin, pin_get_at: @cert.pin_get_at, user_id: @cert.user_id }
     end
 
     assert_redirected_to cert_path(assigns(:cert))
@@ -35,7 +35,7 @@ class CertsControllerTest < ActionController::TestCase
   end
 
   test "should update cert" do
-    patch :update, id: @cert, cert: { cert_state_id: @cert.cert_state_id, cert_type_id: @cert.cert_type_id, expire_at: @cert.expire_at, get_at: @cert.get_at, name: @cert.name, pin: @cert.pin, pin_get_at: @cert.pin_get_at, user_id: @cert.user_id }
+    patch :update, id: @cert, cert: { cert_state_id: @cert.cert_state_id, cert_type_id: @cert.cert_type_id, expire_at: @cert.expire_at, get_at: @cert.get_at, memo: @cert.memo, pin: @cert.pin, pin_get_at: @cert.pin_get_at, user_id: @cert.user_id }
     assert_redirected_to cert_path(assigns(:cert))
   end
 

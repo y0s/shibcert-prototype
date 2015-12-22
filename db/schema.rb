@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151222015914) do
+ActiveRecord::Schema.define(version: 20151222020815) do
 
   create_table "cert_states", force: true do |t|
     t.string   "name"
@@ -26,7 +26,6 @@ ActiveRecord::Schema.define(version: 20151222015914) do
   end
 
   create_table "certs", force: true do |t|
-    t.string   "name"
     t.datetime "get_at"
     t.datetime "expire_at"
     t.string   "pin"
@@ -40,6 +39,7 @@ ActiveRecord::Schema.define(version: 20151222015914) do
     t.integer  "purpose_type"
     t.string   "serialnumber"
     t.string   "dn"
+    t.string   "memo"
   end
 
   create_table "roles", force: true do |t|
