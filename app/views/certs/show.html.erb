@@ -68,6 +68,18 @@
 	  <% end %>
 	</td>
   </tr>
+
+  <tr>
+	<td><strong>DN(識別名)</strong></td>
+	<td>
+	  <% if @cert.dn %>
+	  <%= @cert.dn %>
+	  <% else %>
+	  エラー
+	  <% end %>
+	</td>
+  </tr>
+  
   
   <tr>
 	<td><strong>用途メモ</strong></td>
@@ -80,6 +92,8 @@
 	  <% end %>
 	</td>
   </tr>
+
+  
 </table>
 <% else %>
 <p> 指定された証明書が存在しません。何らかのエラーの可能性がありますので、管理担当者までご連絡下さい。</p>
