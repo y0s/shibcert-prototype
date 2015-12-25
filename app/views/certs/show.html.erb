@@ -17,7 +17,7 @@
 	<td>
 	  <% if @cert.state == 0 %>
 	  申請中です。
-	  <% elsif @cert.state == nil or ー1 %>
+	  <% elsif @cert.state == nil || @cert.state < 0 %>
 	  申請・発行に問題が発生しています。担当部署までお問い合わせ下さい。
 	  <% elsif @cert.state == 1 %>
 	  発行完了済・有効です。
