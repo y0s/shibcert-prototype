@@ -23,3 +23,5 @@
 
 # Ignore certificates
 /config/certificates/*
+
+.ruby-version
