@@ -1,7 +1,6 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  id: 1
   memo: MyString
   get_at: 2015-08-18 13:30:01
   expire_at: 2015-08-18 13:30:01
@@ -13,7 +12,6 @@ one:
   dn: "CN=test01,OU=01,OU=IIMC,OU=Kyoto University,L=Academe,C=JP"
 
 two:
-  id: 2
   memo: MyString
   get_at: 2015-08-18 13:30:01
   expire_at: 2015-08-18 13:30:01
