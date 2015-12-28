@@ -15,16 +15,17 @@
   <tr>
 	<td><strong>発行の状況</strong></td>
 	<td>
-	  <% if @cert.state == 0 %>
+	  <% case @cert.state %>
+          <% when 0 %>
 	  申請中です。
-	  <% elsif @cert.state == nil || @cert.state < 0 %>
-	  申請・発行に問題が発生しています。担当部署までお問い合わせ下さい。
-	  <% elsif @cert.state == 1 %>
+	  <% when 1 %>
 	  発行完了済・有効です。
-	  <% elsif @cert.state == 2 %>
+	  <% when 2 %>
 	  発行完了済・期限切れのため無効です。
-	  <% elsif @cert.state == 3 %>
+	  <% when 3 %>
 	  発行完了済・利用者自身により無効化されました。
+	  <% else %>
+	  申請・発行に問題が発生しています。担当部署までお問い合わせ下さい。
 	  <% end %>
 	</td>
   </tr>
