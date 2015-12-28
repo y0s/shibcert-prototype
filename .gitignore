@@ -20,6 +20,8 @@
 
 # Ignore emacs backup
 *~
+\#*\#
+.\#*
 
 # Ignore certificates
 /config/certificates/*
