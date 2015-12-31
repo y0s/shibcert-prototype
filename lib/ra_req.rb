@@ -39,7 +39,7 @@ class RAreq
     user = User.find_by(id: cert.user_id)
 
     tsv = [cert.dn,
-           cert.cert_type_id
+           cert.cert_type_id,
            SHIBCERT_CONFIG[Rails.env]['cert_download_type'] || '1', # 1:P12個別
            '', '', '', '',
            SHIBCERT_CONFIG[Rails.env]['admin_name'],
