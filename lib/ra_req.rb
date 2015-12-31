@@ -28,7 +28,7 @@ TSV = ['CN=example,OU=001,OU=Example OU,O=Kyoto University,L=Academe,C=JP', # No
       ].join("\t")
 =end
 
-class RAreq
+class RaReq
 
   def initialize
   end
