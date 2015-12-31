@@ -9,25 +9,6 @@ require 'mechanize'
 require 'pp'
 require 'logger'
 
-=begin
-# TSV format https://certs.nii.ac.jp/archive/TSV_File_Format/client_tsv/
-TSV = ['CN=example,OU=001,OU=Example OU,O=Kyoto University,L=Academe,C=JP', # No.1 certificate DN
-       '5',                     # No.2 Profile - 4:client(sha1), 5:client(sha256), 6:S/MIME(sha1), 7:S/MIME(sha256)
-       '1',                     # No.3 Download Type - 1:P12個別, 2:P12一括, 3:ブラウザ個別
-       '',                      # No.4 -
-       '',                      # No.5 -
-       '',                      # No.6 -
-       '',                      # No.7 -
-       'Name',                  # No.8 admin user name
-       'Example OU',            # No.9 admin OU
-       'example@kyoto-u.ac.jp', # No.10 admin mail
-       'Name',                  # No.11 user name
-       'example20151221C00511', # No.12 P12 filename
-       'example OU',            # No.13 user OU 
-       'example@kyoto-u.ac.jp', # No.14 user mail
-      ].join("\t")
-=end
-
 class RaReq
 
   def initialize
@@ -87,6 +68,25 @@ class RaReq
   end
 end
 
+
+=begin
+# TSV format https://certs.nii.ac.jp/archive/TSV_File_Format/client_tsv/
+TSV = ['CN=example,OU=001,OU=Example OU,O=Kyoto University,L=Academe,C=JP', # No.1 certificate DN
+       '5',                     # No.2 Profile - 4:client(sha1), 5:client(sha256), 6:S/MIME(sha1), 7:S/MIME(sha256)
+       '1',                     # No.3 Download Type - 1:P12個別, 2:P12一括, 3:ブラウザ個別
+       '',                      # No.4 -
+       '',                      # No.5 -
+       '',                      # No.6 -
+       '',                      # No.7 -
+       'Name',                  # No.8 admin user name
+       'Example OU',            # No.9 admin OU
+       'example@kyoto-u.ac.jp', # No.10 admin mail
+       'Name',                  # No.11 user name
+       'example20151221C00511', # No.12 P12 filename
+       'example OU',            # No.13 user OU 
+       'example@kyoto-u.ac.jp', # No.14 user mail
+      ].join("\t")
+=end
 
 # 最終ページの例
 
