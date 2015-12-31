@@ -3,13 +3,14 @@
 require 'test_helper'
 
 class RaReqTest < ActiveSupport::TestCase
-  setup do
-    @cert = certs(:one)
+  test "RAreq get_upload_url" do
+    rareq = RaReq.new
+    upload_url = rareq.get_upload_url
+    assert upload_url.title == '国立情報学研究所 電子証明書自動発行支援システム'
   end
 
-  test "rareq new" do
+  test "RAreq " do
     rareq = RaReq.new
-#    upload_url = rareq.get_upload_url
-#    p upload_url
+    rareq.request(certs(:one))
   end
 end

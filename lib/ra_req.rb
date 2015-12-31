@@ -12,7 +12,7 @@ require 'logger'
 class RaReq
 
   def initialize
-    %w(admin_name admin_ou admin_main user_ou).each do |key|
+    %w(admin_name admin_ou admin_mail user_ou).each do |key|
       unless SHIBCERT_CONFIG[Rails.env].has_key?(key)
         Rails.logger.debug "Nesesary value '#{key}' in '#{Rails.env}' is not set in system configuration file."
       end
@@ -34,9 +34,15 @@ class RaReq
   end
   
   def request(cert)
-    return nil if cert.state != 0
+    if cert.state != 0
+      Rails.logger.info 'RaReq.request failed because of cert.state != 0'
+      return nil
+    end
 
-    user = User.find_by(id: cert.user_id)
+    unless (user = User.find_by(id: cert.user_id))
+      Rails.logger.info "RaReq.request failed because of User.find_by(id: #{cert.user_id}) == nil"
+      return nil
+    end
 
     tsv = [cert.dn,
            cert.cert_type_id,
@@ -48,16 +54,16 @@ class RaReq
            user.name,
            'NIIcert' + Time.now.strftime("%Y%m%d-%H%M%S"),
            SHIBCERT_CONFIG[Rails.env]['user_ou'],
-           user.mail,
+           user.email,
           ].join("\t")
 
     upload_url = get_upload_url
 
-    form = main_menu.form_with(:name => 'SP1011')
+    form = upload_url.form_with(:name => 'SP1011')
     form.applyType = '1'            # 処理内容 1:発行, 2:更新, 3:失効
     form.radiobuttons_with(:name => 'errorFlg')[0].check # エラーが有れば全件処理を中止
     form.file_upload_with(:name => 'file'){|form_upload| # TSV をアップロード準備
-      form_upload.file_data = TSV                        # アップロードする内容を文字列として渡す
+      form_upload.file_data = tsv                        # アップロードする内容を文字列として渡す
       form_upload.file_name = 'sample.tsv'               # 何かファイル名を渡す
       form_upload.mime_type = 'application/force-download' # mime_type これで良いのか？
     }
@@ -67,7 +73,7 @@ class RaReq
     #p submitted_form.body.encoding
     $stderr.puts submitted_form.body # アップロード完了ページ．このページの内容を解析して正常終了したかどうかを確認する必要がある
 
-    if Regexp("ファイルのアップロード処理が完了しました。").match(submitted_form.body)
+    if Regexp.new("ファイルのアップロード処理が完了しました。").match(submitted_form.body.encode("utf-8", "euc-jp"))
       cert.state = 1
       return cert
     else
