@@ -12,8 +12,27 @@ require 'logger'
 class RaReq
 
   def initialize
+    %w(admin_name admin_ou admin_main user_ou).each do |key|
+      unless SHIBCERT_CONFIG[Rails.env].has_key?(key)
+        Rails.logger.debug "Nesesary value '#{key}' in '#{Rails.env}' is not set in system configuration file."
+      end
+    end
   end
 
+  def get_upload_url
+    agent = Mechanize.new
+    agent.cert = SHIBCERT_CONFIG[Rails.env]['certificate_file'] # config/shibcert.yml
+    agent.key =  SHIBCERT_CONFIG[Rails.env]['certificate_key_file'] # config/shibcert.yml
+
+    agent.get('https://scia.secomtrust.net/upki-odcert/lra/SSLLogin.do') # Login with client certificate
+
+    agent.page.frame_with(:name => 'hidari').click
+
+    form = agent.page.form_with(:name => 'MainMenuForm')
+    form.forwardName = 'SP1011'     # 「発行・更新・失効」メニューのIDが 'SP1011'
+    form.submit
+  end
+  
   def request(cert)
     return nil if cert.state != 0
 
@@ -32,17 +51,7 @@ class RaReq
            user.mail,
           ].join("\t")
 
-    agent = Mechanize.new
-    agent.cert = SHIBCERT_CONFIG[Rails.env]['certificate_file'] # config/shibcert.yml
-    agent.key =  SHIBCERT_CONFIG[Rails.env]['certificate_key_file'] # config/shibcert.yml
-
-    agent.get('https://scia.secomtrust.net/upki-odcert/lra/SSLLogin.do') # Login with client certificate
-
-    agent.page.frame_with(:name => 'hidari').click
-
-    form = agent.page.form_with(:name => 'MainMenuForm')
-    form.forwardName = 'SP1011'     # 「発行・更新・失効」メニューのIDが 'SP1011'
-    main_menu = form.submit
+    upload_url = get_upload_url
 
     form = main_menu.form_with(:name => 'SP1011')
     form.applyType = '1'            # 処理内容 1:発行, 2:更新, 3:失効
