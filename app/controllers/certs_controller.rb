@@ -27,8 +27,11 @@ class CertsController < ApplicationController
     #   https://certs.nii.ac.jp/archive/TSV_File_Format/client_tsv/
     
     if params[:cert]["purpose_type"] == "5"
-      current_user.cert_serial_max += 1
-      current_user.save # TODO: need error check
+      ActiveRecord::Base.transaction do      
+        current_user.cert_serial_max += 1
+        current_user.save # TODO: need error check
+      end        
+        
       dn = "CN=#{current_user.name},OU=No #{current_user.cert_serial_max.to_s},OU=Institute for Information Management and Communication,O=Kyoto University,L=Academe,C=JP"
     elsif params[:cert]["purpose_type"] == "7"
       dn = "CN=#{current_user.email},OU=Institute for Information Management and Communication,O=Kyoto University,L=Academe,C=JP"

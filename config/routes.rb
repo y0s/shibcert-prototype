@@ -1,6 +1,6 @@
 Shibcert::Application.routes.draw do
   scope '(:locale)', locale: /ja|en/ do  
-    root "portal#index"
+    root "certs#index"
     
     get "portal/index"
     get "certs/request_select"

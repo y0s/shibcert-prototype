@@ -1,5 +1,20 @@
-<h3>あなたの証明書一覧</h3>
+<h3>証明書発行申請ダッシュボード</h3>
+<br>
+<h4><%= t('req_sel.title') %></h4>
+<br>
 
+<div class="container">
+	<%= form_tag({controller: "certs", action: "request_result"}, {class: "form-inline"}) do %>
+	<%= hidden_field :cert, :purpose_type, :value => 5 %>
+	<%= submit_tag(SHIBCERT_CONFIG['caption_j']['purpose_type_short'][5] + t('req_sel.linktext'), class: "btn btn-primary", data: {confirm: t('req_sel.confirm')}) %> 
+	<% end %>
+	<br>
+	<%= form_tag({controller: "certs", action: "request_result"}, {class: "form-inline"}) do  %>
+	<%= hidden_field :cert, :purpose_type, :value => 7 %>  
+	<%= submit_tag SHIBCERT_CONFIG['caption_j']['purpose_type_short'][7] + t('req_sel.linktext'), class: "btn btn-primary", data: {confirm: t('req_sel.confirm')} %> 
+	<% end %>
+<br>
+<h4>証明書の発行状況</h4>
 <table class="table table-striped">
   <thead>
     <tr>
@@ -7,7 +22,7 @@
       <th>申請日</th>
       <th>有効/無効</th>
       <th>メモ</th>
-      <th></th>
+      <th>アクション</th>
     </tr>
   </thead>
 
@@ -46,5 +61,3 @@
   </tbody>
 </table>
 <br>
-
-<%= link_to 'ポータルのトップページへ戻る', {controller: "portal", action: "index"} %>
