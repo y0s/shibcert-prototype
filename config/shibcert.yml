@@ -9,8 +9,8 @@ caption_j:
     5: "学内ネットワーク(KUINS)認証用 クライアント証明書"  
     7: "全学メール(KUMAIL,KUMOI)用 S/MIME証明書"
   purpose_type_short:
-    5: "KUINS用 クライアント証明書"  
-    7: "全学メール用 S/MIME証明書"
+    5: "クライアント証明書"  
+    7: "S/MIME証明書"
 caption_e:
   site_title: "Kyoto University Personal Certification Application System"  
   purpose_type:
