@@ -27,3 +27,19 @@ development:
   certificate_file: "config/certificates/client.cer"
   certificate_key_file:  "config/certificates/client.key"
 
+  cert_download_type: '1'
+  admin_name: 'shibcert.iimc.kyoto-u.ac.jp'
+  admin_ou: 'Institute for Information Management and Communication'
+  admin_mail: 'shibcert@iimc.kyoto-u.ac.jp'
+  user_ou: 'Institute for Information Management and Communication'
+
+test:
+  certificate_file: "config/certificates/client.cer"
+  certificate_key_file:  "config/certificates/client.key"
+
+  cert_download_type: '1'
+  admin_name: 'shibcert.iimc.kyoto-u.ac.jp'
+  admin_ou: 'Institute for Information Management and Communication'
+  admin_mail: 'shibcert@iimc.kyoto-u.ac.jp'
+  user_ou: 'Institute for Information Management and Communication'
+

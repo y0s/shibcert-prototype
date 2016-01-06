@@ -6,13 +6,86 @@
 
 require 'rubygems'
 require 'mechanize'
-#require 'mail'
-#require 'zipruby'
 require 'pp'
 require 'logger'
 
+class RaReq
+
+  def initialize
+    %w(admin_name admin_ou admin_mail user_ou).each do |key|
+      unless SHIBCERT_CONFIG[Rails.env].has_key?(key)
+        Rails.logger.debug "Nesesary value '#{key}' in '#{Rails.env}' is not set in system configuration file."
+      end
+    end
+  end
+
+  def get_upload_url
+    agent = Mechanize.new
+    agent.cert = SHIBCERT_CONFIG[Rails.env]['certificate_file'] # config/shibcert.yml
+    agent.key =  SHIBCERT_CONFIG[Rails.env]['certificate_key_file'] # config/shibcert.yml
+
+    agent.get('https://scia.secomtrust.net/upki-odcert/lra/SSLLogin.do') # Login with client certificate
+
+    agent.page.frame_with(:name => 'hidari').click
+
+    form = agent.page.form_with(:name => 'MainMenuForm')
+    form.forwardName = 'SP1011'     # 「発行・更新・失効」メニューのIDが 'SP1011'
+    form.submit
+  end
+  
+  def request(cert)
+    if cert.state != 0
+      Rails.logger.info 'RaReq.request failed because of cert.state != 0'
+      return nil
+    end
+
+    unless (user = User.find_by(id: cert.user_id))
+      Rails.logger.info "RaReq.request failed because of User.find_by(id: #{cert.user_id}) == nil"
+      return nil
+    end
+
+    tsv = [cert.dn,
+           cert.cert_type_id,
+           SHIBCERT_CONFIG[Rails.env]['cert_download_type'] || '1', # 1:P12個別
+           '', '', '', '',
+           SHIBCERT_CONFIG[Rails.env]['admin_name'],
+           SHIBCERT_CONFIG[Rails.env]['admin_ou'],
+           SHIBCERT_CONFIG[Rails.env]['admin_mail'],
+           user.name,
+           'NIIcert' + Time.now.strftime("%Y%m%d-%H%M%S"),
+           SHIBCERT_CONFIG[Rails.env]['user_ou'],
+           user.email,
+          ].join("\t")
+
+    upload_url = get_upload_url
+
+    form = upload_url.form_with(:name => 'SP1011')
+    form.applyType = '1'            # 処理内容 1:発行, 2:更新, 3:失効
+    form.radiobuttons_with(:name => 'errorFlg')[0].check # エラーが有れば全件処理を中止
+    form.file_upload_with(:name => 'file'){|form_upload| # TSV をアップロード準備
+      form_upload.file_data = tsv                        # アップロードする内容を文字列として渡す
+      form_upload.file_name = 'sample.tsv'               # 何かファイル名を渡す
+      form_upload.mime_type = 'application/force-download' # mime_type これで良いのか？
+    }
+    submitted_form = form.submit    # submit and file-upload
+
+    #p submitted_form
+    #p submitted_form.body.encoding
+    $stderr.puts submitted_form.body # アップロード完了ページ．このページの内容を解析して正常終了したかどうかを確認する必要がある
+
+    if Regexp.new("ファイルのアップロード処理が完了しました。").match(submitted_form.body.encode("utf-8", "euc-jp"))
+      cert.state = 1
+      return cert
+    else
+      cert.state = -1
+      return nil
+    end
+  end
+end
+
+
+=begin
 # TSV format https://certs.nii.ac.jp/archive/TSV_File_Format/client_tsv/
-# for TEST
 TSV = ['CN=example,OU=001,OU=Example OU,O=Kyoto University,L=Academe,C=JP', # No.1 certificate DN
        '5',                     # No.2 Profile - 4:client(sha1), 5:client(sha256), 6:S/MIME(sha1), 7:S/MIME(sha256)
        '1',                     # No.3 Download Type - 1:P12個別, 2:P12一括, 3:ブラウザ個別
@@ -28,35 +101,7 @@ TSV = ['CN=example,OU=001,OU=Example OU,O=Kyoto University,L=Academe,C=JP', # No
        'example OU',            # No.13 user OU 
        'example@kyoto-u.ac.jp', # No.14 user mail
       ].join("\t")
-
-agent = Mechanize.new
-
-agent.cert = SHIBCERT_CONFIG[Rails.env]['certificate_file'] # config/shibcert.yml
-agent.key =  SHIBCERT_CONFIG[Rails.env]['certificate_key_file'] # config/shibcert.yml
-
-agent.get('https://scia.secomtrust.net/upki-odcert/lra/SSLLogin.do') # Login with client certificate
-
-agent.page.frame_with(:name => 'hidari').click
-
-form = agent.page.form_with(:name => 'MainMenuForm')
-form.forwardName = 'SP1011'     # 「発行・更新・失効」メニューのIDが 'SP1011'
-main_menu = form.submit
-
-form = main_menu.form_with(:name => 'SP1011')
-form.applyType = '1'            # 処理内容 1:発行, 2:更新, 3:失効
-form.radiobuttons_with(:name => 'errorFlg')[0].check # エラーが有れば全件処理を中止
-form.file_upload_with(:name => 'file'){|form_upload| # TSV をアップロード準備
-  form_upload.file_data = TSV                        # アップロードする内容を文字列として渡す
-  form_upload.file_name = 'sample.tsv'               # 何かファイル名を渡す
-  form_upload.mime_type = 'application/force-download' # mime_type これで良いのか？
-}
-submitted_form = form.submit    # submit and file-upload
-
-#p submitted_form
-#p submitted_form.body.encoding
-$stderr.puts submitted_form.body # アップロード完了ページ．このページの内容を解析して正常終了したかどうかを確認する必要がある
-
-
+=end
 
 # 最終ページの例
 
