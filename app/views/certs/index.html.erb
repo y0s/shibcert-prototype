@@ -14,10 +14,11 @@
 	<%= submit_tag SHIBCERT_CONFIG['caption_j']['purpose_type_short'][7] + t('req_sel.linktext'), class: "btn btn-primary", data: {confirm: t('req_sel.confirm')} %> 
 	<% end %>
 <br>
-<h4>証明書の発行状況</h4>
+<h4>証明書の発行状況 (申請番号をクリックで詳細表示)</h4>
 <table class="table table-striped">
   <thead>
     <tr>
+      <th>申請番号</th>	  
       <th>証明書タイプ</th>
       <th>申請日</th>
       <th>有効/無効</th>
@@ -30,6 +31,7 @@
 
     <% @certs.each do |cert| %>
     <tr>
+	  <td><%= link_to cert.id.to_s, {action: "show", id: cert.id}, {class: "btn btn-default"}   %></td>	  
 	  <td>
 		<% purpose_cap = SHIBCERT_CONFIG['caption_j']['purpose_type_short'] %>
 		<% if purpose_cap[cert.purpose_type] %>
@@ -55,7 +57,7 @@
 		<% end %>
 	  </td>
       <td><%= cert.memo %></td>		
-      <td><%= link_to '詳細', {action: "show", id: cert.id}, {class: "btn btn-default"} %></td>
+      <td><%= link_to '更新', {action: "index"}, {class: "btn btn-primary"} %> <%= link_to '失効', {action: "index"}, {class: "btn btn-primary"} %></td>
       </tr>
     <% end %>
   </tbody>
