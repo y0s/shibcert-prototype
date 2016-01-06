@@ -31,7 +31,7 @@
 
     <% @certs.each do |cert| %>
     <tr>
-	  <td><%= link_to cert.id.to_s, {action: "show", id: cert.id}, {class: "btn btn-default"}   %></td>	  
+	  <td><%= link_to cert.req_seq.to_s, {action: "show", id:cert.id}, {class: "btn btn-default"}   %></td>	  
 	  <td>
 		<% purpose_cap = SHIBCERT_CONFIG['caption_j']['purpose_type_short'] %>
 		<% if purpose_cap[cert.purpose_type] %>

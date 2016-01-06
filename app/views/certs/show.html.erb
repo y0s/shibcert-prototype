@@ -3,6 +3,8 @@
 <% if @cert %>
 <table class="table">
   <tr>
+	<td><strong>申請番号</strong></td>
+	<td><%= @cert.req_seq %></td>
 	<td><strong>証明書タイプ</strong></td>
 	<td>
 	  <% if SHIBCERT_CONFIG['caption_j']['purpose_type'][@cert.purpose_type] %>

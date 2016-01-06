@@ -25,21 +25,21 @@ class CertsController < ApplicationController
     #        3 => invadidated, -1 => error
     # purpose_type: profile ID of
     #   https://certs.nii.ac.jp/archive/TSV_File_Format/client_tsv/
+
+    ActiveRecord::Base.transaction do      
+      current_user.cert_serial_max += 1
+      current_user.save # TODO: need error check
+    end        
     
     if params[:cert]["purpose_type"] == "5"
-      ActiveRecord::Base.transaction do      
-        current_user.cert_serial_max += 1
-        current_user.save # TODO: need error check
-      end        
-        
       dn = "CN=#{current_user.name},OU=No #{current_user.cert_serial_max.to_s},OU=Institute for Information Management and Communication,O=Kyoto University,L=Academe,C=JP"
     elsif params[:cert]["purpose_type"] == "7"
-      dn = "CN=#{current_user.email},OU=Institute for Information Management and Communication,O=Kyoto University,L=Academe,C=JP"
+      dn = "CN=#{current_user.email},OU=No #{current_user.cert_serial_max.to_s},OU=Institute for Information Management and Communication,O=Kyoto University,L=Academe,C=JP"
     else
       dn = params[:cert]["purpose_type"].to_s # something wrong. TODO: need error handling
     end
     
-    request_params = params.require(:cert).permit(:purpose_type).merge({user_id: current_user.id, state: 0, dn: dn})
+    request_params = params.require(:cert).permit(:purpose_type).merge({user_id: current_user.id, state: 0, dn: dn, req_seq: current_user.cert_serial_max})
     @cert = Cert.new(request_params)
     @cert.save
     @new_cert_id = @cert.id
