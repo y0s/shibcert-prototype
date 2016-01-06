@@ -25,6 +25,9 @@ module Shibcert
 
     # set default locale
     config.i18n.default_locale = :ja
+
+    # to auto load lib/ directory
+    config.autoload_paths += %W(#{config.root}/lib)
   end
 end
 
