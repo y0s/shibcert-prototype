@@ -1,96 +1,94 @@
-<h3>証明書の詳細</h3>
+<h3><%= t('.title') %></h3>
 
 <% if @cert %>
 <table class="table">
   <tr>
-	<td><strong>申請番号</strong></td>
+	<td><strong><%= t('.req_seq') %></strong></td>
 	<td><%= @cert.req_seq %></td>
-	<td><strong>証明書タイプ</strong></td>
+  </tr>
+  <tr>
+	<td><strong><%= t('.purpose_type') %></strong></td>
 	<td>
-	  <% if SHIBCERT_CONFIG['caption_j']['purpose_type'][@cert.purpose_type] %>
-	  <%= SHIBCERT_CONFIG['caption_j']['purpose_type'][@cert.purpose_type] %>
+	  <% if t('common.purpose_type.t' + @cert.purpose_type.to_s) %>
+	  <%= t('common.purpose_type.t' + @cert.purpose_type.to_s)	%>
 	  <% else %>  
-	  証明書タイプに問題が発生しています。担当部署までお問い合わせ下さい。
+	  <%= t('purpose_type_errror') %>
 	  <% end %>
 	</td>
   </tr>
   <tr>
-	<td><strong>発行の状況</strong></td>
+	<td><strong><%= t('.cert_status') %></strong></td>
 	<td>
 	  <% case @cert.state %>
-          <% when 0 %>
-	  申請中です。
+      <% when 0 %>
+	  <%= t('.cert_requesting') %>	  
 	  <% when 1 %>
-	  発行完了済・有効です。
+	  <%= t('.cert_valid') %>	  
 	  <% when 2 %>
-	  発行完了済・期限切れのため無効です。
+	  <%= t('.cert_expired') %>	  
 	  <% when 3 %>
-	  発行完了済・利用者自身により無効化されました。
+	  <%= t('.cert_invalid') %>	  
 	  <% else %>
-	  申請・発行に問題が発生しています。担当部署までお問い合わせ下さい。
+	  <%= t('.cert_error') %>	  
 	  <% end %>
 	</td>
   </tr>
   <tr>
-	<td><strong>PIN番号</strong></td>
+	<td><strong><%= t('.pin_number') %></strong></td>
 	<td>
 	<% if @cert.pin %>
 	<%= @cert.pin %>
 	<% else %>
-	まだPIN番号は発行されていません。申請完了メール送信までお待ちください。
+	<%= t('.pin_wait') %>
 	<% end %>
 	</td>
   </tr>
   <tr>
-	<td><strong>申請日時</strong></td>
+	<td><strong><%= t('.date') %></strong></td>
 	<td>
-	  <% if @cert.created_at %>
-	  <%= @cert.created_at %>
-	  <% else %>
-	  未発行
-	  <% end %>
+	  <%= I18n.l(@cert.created_at) %>
 	</td>
   </tr>
   <tr>
-	<td><strong>発行日時</strong></td>
+	<td><strong><%= t('.issue_date') %></strong></td>
 	<td>
 	  <% if @cert.pin %>
 	  <%= @cert.pin %>
 	  <% else %>
-	  未発行
+	  <%= t('.cert_unavailable') %>	  
 	  <% end %>
 	</td>
   </tr>
   <tr>
-	<td><strong>有効期限</strong></td>
+	<td><strong><%= t('.expire_date') %></strong></td>
 	<td>
 	  <% if @cert.pin %>
 	  <%= @cert.pin %>
 	  <% else %>
-	  未発行
+	  <%= t('.cert_unavailable') %>	  
 	  <% end %>
 	</td>
   </tr>
 
   <tr>
-	<td><strong>DN(識別名)</strong></td>
+	<td><strong><%= t('.dn') %></strong></td>
 	<td>
 	  <% if @cert.dn %>
 	  <%= @cert.dn %>
 	  <% else %>
-	  エラー
+	  <%= t('.dn_error') %>
 	  <% end %>
 	</td>
   </tr>
   
   
   <tr>
-	<td><strong>用途メモ</strong></td>
+	<td><strong><%= t('.memo') %></strong></td>
 	<td>
 	  <%= form_tag({controller: "certs", action: "edit_memo_remote", id: @cert.id, }, remote: true, class: "form-inline") do %>
 	  <div class ="form-group">
-		<%= text_field :cert, :memo, placeholder: "(例)iPhoneのメール暗号化用" %>
-		<%= submit_tag "メモを保存", class:"btn btn-xs btn-default" %>
+		<%= text_field :cert, :memo, placeholder: t('.memo_placeholder') %>
+		<%= submit_tag t('.memo_bt'), class:"btn btn-xs btn-default" %>
 	  </div>
 	  <% end %>
 	</td>
@@ -99,8 +97,8 @@
   
 </table>
 <% else %>
-<p> 指定された証明書が存在しません。何らかのエラーの可能性がありますので、管理担当者までご連絡下さい。</p>
+<p> <%= t('.cert_error') %></p>
 <% end %>
 
-<%= link_to 'ダッシュボードページに戻る', {controller: "certs", action: "index"} %>
+<%= link_to t('.to_dashboard'), {controller: "certs", action: "index"} %>
 

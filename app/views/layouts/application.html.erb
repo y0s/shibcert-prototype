@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title><%= SHIBCERT_CONFIG['site_title_j']  %></title>
+  <title><%= SHIBCERT_CONFIG['label']['ja']['site_title']  %></title>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
@@ -10,7 +10,7 @@
   <div class="navbar navbar-default" role="navigation">
 	<div class="container-fluid">	
 	  <div class="navbar-header">
-		<%= link_to SHIBCERT_CONFIG['caption_j']['site_title'],
+		<%= link_to SHIBCERT_CONFIG['label']['ja']['site_title'],
 			{controller: "portal", action: "index"}, class: "navbar-brand" %>
 	  </div>
 	  <% if current_user %>

@@ -35,19 +35,63 @@ ja:
     otherlogintext: "他のサービスを使って"    
     loginlink: "ログイン"
   common:
-    backlink: "キャンセルして戻る"    
-  req_sel:
-    title: "証明書の種類を選択して申請"
-    confirm: "発行元(国立情報学研究所)に申請を送信します。よろしいですか？"
-    linktext: "を申請"    
-  req_result:
-    title: "申請完了"
-    text_html: "証明書の発行元(国立情報学研究所)に対する発行申請を行いました。<br>
-    発行が完了すると、大学のアドレスに対してメールが届きます。<br>
-    証明書の利用には、送信されたメールの他に、<b>PIN(Personal Identification Number)</b>が必要となります。<br>
-    PINは発行完了後の一定期間、本ポータルの証明書情報確認画面で確認できます。"
-    showlink: "証明書情報確認"
-
+    backlink: "キャンセルして戻る"
+    purpose_type:
+      t5: "S/MIME証明書" #5 
+      t7: "クライアント証明書" #7
+  certs:
+    index:
+      dashboard_title: "証明書発行申請ダッシュボード"
+      req_title: "証明書の種類を選択して申請"
+      req_bt: "を申請"
+      confirm: "発行元(国立情報学研究所)に申請を送信します。よろしいですか？"
+      linktext: "を申請"
+      list_title: "証明書の発行状況 (申請番号をクリックで詳細表示)"
+      list_seq: "申請番号"
+      list_type: "証明書の種類"
+      list_date: "申請日"
+      list_available: "有効/無効"
+      list_memo: "メモ"
+      list_action: "アクション"
+      list_purpose_type_errror: "証明書タイプに問題が発生しています。<br>担当部署までお問い合わせ下さい。"
+      cert_expired: "期限切れ"
+      cert_valid: "有効"
+      cert_invalid: "無効"
+      cert_requesting: "未発行"
+      update: "更新"      
+      disable: "失効"
+    request_result:
+      title: "申請完了"
+      text_html: "証明書の発行元(国立情報学研究所)に対する発行申請を行いました。<br>
+      発行が完了すると、大学のアドレスに対してメールが届きます。<br>
+      証明書の利用には、送信されたメールの他に、<b>PIN(Personal Identification Number)</b>が必要となります。<br>
+      PINは発行完了後の一定期間、本ポータルの証明書情報確認画面で確認できます。"
+      showlink: "証明書情報確認"
+    show:
+      title: '証明書の詳細'
+      req_seq: '申請番号'
+      purpose_type: '証明書タイプ'
+      purpose_type_errror: "証明書タイプに問題が発生しています。<br>担当部署までお問い合わせ下さい。"      
+      cert_status: '発行の状況'
+      cert_requesting: '申請中です。'
+      cert_valid: '発行完了済・有効です。'
+      cert_expired: '発行完了済・期限切れのため無効です。'
+      cert_invalid: '発行完了済・利用者自身により無効化されました。'
+      cert_error: '申請・発行に問題が発生しています。担当部署までお問い合わせ下さい。'
+      pin_number: 'PIN番号'
+      pin_wait: 'まだPIN番号は発行されていません。申請完了メール送信までお待ちください。'
+      date: '申請日時'
+      cert_unavailable: '未発行'
+      issue_date: '発行日時'
+      expire_date: '有効期限'
+      dn: 'DN(識別名)'
+      dn_error: 'エラー'
+      memo: '用途メモ'
+      memo_placeholder: '(例)iPhoneのメール暗号化用'
+      memo_bt: 'メモを保存'
+      cert_error: '指定された証明書が存在しません。何らかのエラーの可能性がありますので、管理担当者までご連絡下さい。'
+      to_dashboard: 'ダッシュボードページに戻る'
+      
 # copy from http://avosalmon.hatenablog.com/entry/2014/06/15/%E3%80%90Rails%E3%80%91date_select%E3%81%A7%22undefined_method_for_translation_missing_ja_date_order_string%22
   date:
     formats:

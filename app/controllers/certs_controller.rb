@@ -34,7 +34,7 @@ class CertsController < ApplicationController
     if params[:cert]["purpose_type"] == "5"
       dn = "CN=#{current_user.name},OU=No #{current_user.cert_serial_max.to_s},OU=Institute for Information Management and Communication,O=Kyoto University,L=Academe,C=JP"
     elsif params[:cert]["purpose_type"] == "7"
-      dn = "CN=#{current_user.email},OU=No #{current_user.cert_serial_max.to_s},OU=Institute for Information Management and Communication,O=Kyoto University,L=Academe,C=JP"
+      dn = "CN=#{current_user.email},OU=Institute for Information Management and Communication,O=Kyoto University,L=Academe,C=JP"
     else
       dn = params[:cert]["purpose_type"].to_s # something wrong. TODO: need error handling
     end
