@@ -11,7 +11,7 @@
 	<div class="container-fluid">	
 	  <div class="navbar-header">
 		<%= link_to SHIBCERT_CONFIG['label']['ja']['site_title'],
-			{controller: "portal", action: "index"}, class: "navbar-brand" %>
+			{controller: "certs", action: "index"}, class: "navbar-brand" %>
 	  </div>
 	  <% if current_user %>
 	  <div class="collapse navbar-collapse">
@@ -21,7 +21,7 @@
 			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" ><%= t('nav.menu') %><span class="caret"></a>
 			<ul class="dropdown-menu"> 
 			  <li><%= link_to t('nav.help'),
-					  {controller: "portal", action: "index"} %></li>
+					  {controller: "certs", action: "index"} %></li>
 			  <li><%= link_to t('nav.logout'), signout_path %></li>	
 			</ul>
 		  </li>
