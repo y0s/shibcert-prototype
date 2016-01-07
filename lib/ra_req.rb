@@ -19,7 +19,7 @@ class RaReq
     end
   end
 
-  def get_upload_url
+  def self.get_upload_url
     agent = Mechanize.new
     agent.cert = SHIBCERT_CONFIG[Rails.env]['certificate_file'] # config/shibcert.yml
     agent.key =  SHIBCERT_CONFIG[Rails.env]['certificate_key_file'] # config/shibcert.yml
@@ -33,9 +33,14 @@ class RaReq
     form.submit
   end
   
-  def request(cert)
-    if cert.state != 0
-      Rails.logger.info 'RaReq.request failed because of cert.state != 0'
+  def self.request(cert)
+    case cert.state
+    when Cert::State::NEW_REQUESTED_FROM_USER,
+         Cert::State::RENEW_REQUESTED_FROM_USER,
+         Cert::State::REVOKE_REQUESTED_FROM_USER
+      ;                         # NOP
+    else
+      Rails.logger.info "RaReq.request failed because of cert.state is #{cert.state})"
       return nil
     end
 
@@ -45,7 +50,7 @@ class RaReq
     end
 
     tsv = [cert.dn,
-           cert.cert_type_id,
+           cert.purpose_type,
            SHIBCERT_CONFIG[Rails.env]['cert_download_type'] || '1', # 1:P12個別
            '', '', '', '',
            SHIBCERT_CONFIG[Rails.env]['admin_name'],
@@ -56,8 +61,15 @@ class RaReq
            SHIBCERT_CONFIG[Rails.env]['user_ou'],
            user.email,
           ].join("\t")
+    Rails.logger.debug "#{__method__}: tsv #{tsv.inspect}"
 
-    upload_url = get_upload_url
+    if Rails.env == 'development' then
+      open("sample.tsv", "w") do |fp|
+        fp.write(tsv)
+      end
+    end
+
+    upload_url = self.get_upload_url
 
     form = upload_url.form_with(:name => 'SP1011')
     form.applyType = '1'            # 処理内容 1:発行, 2:更新, 3:失効
@@ -69,15 +81,21 @@ class RaReq
     }
     submitted_form = form.submit    # submit and file-upload
 
-    #p submitted_form
-    #p submitted_form.body.encoding
-    $stderr.puts submitted_form.body # アップロード完了ページ．このページの内容を解析して正常終了したかどうかを確認する必要がある
+    if Rails.env == 'development' then
+      open("body.html", "w") do |fp|
+        fp.write submitted_form.body.force_encoding("euc-jp")
+      end
+    end
 
     if Regexp.new("ファイルのアップロード処理が完了しました。").match(submitted_form.body.encode("utf-8", "euc-jp"))
-      cert.state = 1
+      cert.state = Cert::State::NEW_REQUESTED_TO_NII
+      cert.save
+      Rails.logger.debug "#{__method__}: upload success"
       return cert
     else
-      cert.state = -1
+      cert.state = Cert::State::NEW_ERROR
+      cert.save
+      Rails.logger.debug "#{__method__}: upload fail"
       return nil
     end
   end

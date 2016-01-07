@@ -21,8 +21,6 @@ class CertsController < ApplicationController
 
   # POST /certs/request_result
   def request_result
-    # state: 0 => now requesting, 1 => issued, 2 => issued but expired,
-    #        3 => invadidated, -1 => error
     # purpose_type: profile ID of
     #   https://certs.nii.ac.jp/archive/TSV_File_Format/client_tsv/
 
@@ -43,9 +41,18 @@ class CertsController < ApplicationController
       dn = ""
     end
     
-    request_params = params.require(:cert).permit(:purpose_type).merge({user_id: current_user.id, state: 0, dn: dn, req_seq: current_user.cert_serial_max})
+    request_params = params.require(:cert).permit(:purpose_type).merge(
+      {user_id: current_user.id,
+       state: Cert::State::NEW_REQUESTED_FROM_USER,
+       dn: dn,
+       req_seq: current_user.cert_serial_max})
     @cert = Cert.new(request_params)
     @cert.save
+
+    Rails.logger.debug "RaReq.request call: @cert = #{@cert.inspect}"
+    RaReq.request(@cert)
+    Rails.logger.debug "RaReq.request called"
+    
     @new_cert_id = @cert.id
   end
 
