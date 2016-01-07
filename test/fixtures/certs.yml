@@ -6,7 +6,7 @@ one:
   expire_at: 2115-08-18 13:30:01
   pin: MyString
   pin_get_at: 2015-08-18 13:30:01
-  user: userone
+  user: one
   cert_state_id: 1
   cert_type_id: 1
   state: 0
@@ -18,7 +18,7 @@ two:
   expire_at: 2115-08-18 13:30:01
   pin: MyString
   pin_get_at: 2015-08-18 13:30:01
-  user: usertwo
+  user: two
   cert_state_id: 1
   cert_type_id: 1
   state: 0
