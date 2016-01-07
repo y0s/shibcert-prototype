@@ -27,6 +27,8 @@ development:
   admin_mail: 'shibcert@iimc.kyoto-u.ac.jp'
   user_ou: 'Institute for Information Management and Communication'
 
+  base_dn: OU=Institute for Information Management and Communication,O=Kyoto University,L=Academe,C=JP
+
 test:
   certificate_file: "config/certificates/client.cer"
   certificate_key_file:  "config/certificates/client.key"
@@ -37,3 +39,4 @@ test:
   admin_mail: 'shibcert@iimc.kyoto-u.ac.jp'
   user_ou: 'Institute for Information Management and Communication'
 
+  base_dn: OU=Institute for Information Management and Communication,O=Kyoto University,L=Academe,C=JP

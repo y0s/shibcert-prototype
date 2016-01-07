@@ -31,12 +31,16 @@ class CertsController < ApplicationController
       current_user.save # TODO: need error check
     end        
     
-    if params[:cert]["purpose_type"] == "5"
-      dn = "CN=#{current_user.name},OU=No #{current_user.cert_serial_max.to_s},OU=Institute for Information Management and Communication,O=Kyoto University,L=Academe,C=JP"
-    elsif params[:cert]["purpose_type"] == "7"
-      dn = "CN=#{current_user.email},OU=Institute for Information Management and Communication,O=Kyoto University,L=Academe,C=JP"
+    case params[:cert]["purpose_type"].to_i
+    when Cert::PurposeType::CLIENT_AUTH_CERTIFICATE
+      dn = "CN=#{current_user.uid},OU=No #{current_user.cert_serial_max.to_s}," + SHIBCERT_CONFIG[Rails.env]['base_dn']
+
+    when Cert::PurposeType::SMIME_CERTIFICATE
+      dn = "CN=#{current_user.name}," + SHIBCERT_CONFIG[Rails.env]['base_dn']
     else
-      dn = params[:cert]["purpose_type"].to_s # something wrong. TODO: need error handling
+      # something wrong. TODO: need error handling
+      Rails.logger.info "#{__method__}: unknown purpose_type #{params[:cert]['purpose_type']}"
+      dn = ""
     end
     
     request_params = params.require(:cert).permit(:purpose_type).merge({user_id: current_user.id, state: 0, dn: dn, req_seq: current_user.cert_serial_max})
