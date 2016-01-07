@@ -37,8 +37,8 @@ ja:
   common:
     backlink: "キャンセルして戻る"
     purpose_type:
-      t5: "S/MIME証明書" #5 
-      t7: "クライアント証明書" #7
+      t5: "クライアント証明書" #5
+      t7: "S/MIME証明書" #7
   certs:
     index:
       dashboard_title: "証明書発行申請ダッシュボード"
