@@ -6,14 +6,22 @@
 <div class="container">
 	<%= form_tag({controller: "certs", action: "request_result"}, {class: "form-inline"}) do %>
 	<%= hidden_field :cert, :purpose_type, :value => 5 %>
-	<%= submit_tag(t('common.purpose_type.t5') + t('.req_bt'), class: "btn btn-primary", data: {confirm: t('.confirm')}) %> 	
+	<%= submit_tag(t('.req_bt', type: t('common.purpose_type.t5')), class: "btn btn-primary", data: {confirm: t('.confirm')}) %>
+ 	<% if params[:locale] == 'ja' %>	
 	<%= SHIBCERT_CONFIG['label']['ja']['purpose'][5] if SHIBCERT_CONFIG['label']['ja']['purpose'][5] %>
+	<% else %>
+	<%= SHIBCERT_CONFIG['label']['en']['purpose'][5] if SHIBCERT_CONFIG['label']['ja']['purpose'][5] %>
+	<% end %>
 	<% end %>
 	<br>
 	<%= form_tag({controller: "certs", action: "request_result"}, {class: "form-inline"}) do  %>
 	<%= hidden_field :cert, :purpose_type, :value => 7 %>
-	<%= submit_tag( t('common.purpose_type.t7') + t('.req_bt'), class: "btn btn-primary", data: {confirm: t('.confirm')}) %> 		
-	<%= SHIBCERT_CONFIG['label']['ja']['purpose'][7] if SHIBCERT_CONFIG['label']['ja']['purpose'][7] %> 
+	<%= submit_tag(t('.req_bt', type: t('common.purpose_type.t7')), class: "btn btn-primary", data: {confirm: t('.confirm')}) %>
+ 	<% if params[:locale] == 'ja' %>	
+	<%= SHIBCERT_CONFIG['label']['ja']['purpose'][7] if SHIBCERT_CONFIG['label']['ja']['purpose'][7] %>
+	<% else %>
+	<%= SHIBCERT_CONFIG['label']['en']['purpose'][7] if SHIBCERT_CONFIG['label']['ja']['purpose'][7] %>
+	<% end %>
 	<% end %>
 <br>
 <h4><%= t('.list_title') %></h4>

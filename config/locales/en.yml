@@ -20,8 +20,67 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  top:
-    title: "Top Page"
-    text: "You can apply for certification provided by NII and manage them on this system"
-    req_btn: "Apply for Issue of Certification"
-    cert_mng_btn: "Manage Certifications"
+  nav:
+    user: "User"
+    menu: "Account Menu"    
+    help: "Help"    
+    logout: "Log Out"
+  login:
+    logintext: "With Campus ID"
+    otherlogintext: "With Other Authentication Services"    
+    loginlink: "Log In"
+  common:
+    backlink: "Cancel and Back"
+    purpose_type:
+      t5: "Client Certification" #5
+      t7: "S/MIME Certification" #7
+  certs:
+    index:
+      dashboard_title: "Dashboard -- Request System Issuing Certification"
+      dashboard_text: "You can request for issuing personal certification by National Institute of Informatics (NII) here."            
+      req_title: "Request with Certification Type"
+      req_bt: "Request %{type}"
+      confirm: "This system will send your request to the Issuer(NII). Are your sure?"
+      list_title: "Issue Status of Your Certifications (Click request number to show the detail.)"
+      list_seq: "Request Number"
+      list_type: "Type of the Cert"
+      list_date: "Request Date"
+      list_available: "Status"
+      list_memo: "Memo"
+      list_action: "Action"
+      list_purpose_type_errror: "Error occurred on the certification type. Please contact the system administrator."
+      cert_expired: "Expired"
+      cert_valid: "Valid"
+      cert_invalid: "Invalid"
+      cert_requesting: "Requesting"
+      update: "Update"      
+      disable: "Disable"
+    request_result:
+      title: "Your request has been sent."
+      text_html: "Your request has been sent to the issuer of certifications (NII).<br>You can get the mail via campus mail address when the issuing process is completed.<br>You need both the received mail and PIN(Personal Identification Number) to use your certification. You can see PIN on the certification detail page for a certain period after the completion of certification issue."
+      showlink: "See the Detail"
+    show:
+      title: 'Detail of the Certification'
+      req_seq: 'Request Number'
+      purpose_type: 'Certification Type'
+      purpose_type_errror: 'Error occurred on the certification type.Please contact the support staff'      
+      cert_status: 'Issue Status'
+      cert_requesting: 'Requesting'
+      cert_valid: 'Issue Completed: Valid'
+      cert_expired: 'Issue Completed: Expired'
+      cert_invalid: 'Issue Completed: Disabled by the User'
+      cert_error: 'Error occurred on the request or issue process. Please contact the support staff'
+      pin_number: 'PIN'
+      pin_wait: 'PIN has NOT been issued. Please wait the issue completion mail.'
+      date: 'Request Date'
+      cert_unavailable: 'Requesting'
+      issue_date: 'Issue Date'
+      expire_date: 'Expire Date'
+      dn: 'DN(Distingished Name) Information'
+      dn_error: 'Error'
+      memo: 'Memo of Usage'
+      memo_placeholder: '(Ex.) for Encryption of iPhone Email'
+      memo_bt: 'Save the Memo'
+      cert_error: "There's no such certification. Something went wrong, so please contact the support staff."
+      to_dashboard: 'Back to the Dashboard'
+    

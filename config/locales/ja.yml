@@ -20,11 +20,6 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 ja:
-  top:
-    title: "トップページ"
-    text: "このシステムでは国立情報学研究所(NII)が発行する個人証明書の発行申請・管理が行えます。"
-    req_btn: "発行申請画面"
-    cert_mng_btn: "証明書管理画面"
   nav:
     user: "ユーザー"
     menu: "アカウントメニュー"    
@@ -42,18 +37,19 @@ ja:
   certs:
     index:
       dashboard_title: "証明書発行申請ダッシュボード"
+      dashboard_text: "このページでは国立情報学研究所(NII)が発行する個人証明書の発行申請・管理が行えます。"      
       req_title: "証明書の種類を選択して申請"
-      req_bt: "を申請"
+      req_bt: "%{type}を申請"
       confirm: "発行元(国立情報学研究所)に申請を送信します。よろしいですか？"
       linktext: "を申請"
       list_title: "証明書の発行状況 (申請番号をクリックで詳細表示)"
       list_seq: "申請番号"
       list_type: "証明書の種類"
       list_date: "申請日"
-      list_available: "有効/無効"
+      list_available: "状況"
       list_memo: "メモ"
       list_action: "アクション"
-      list_purpose_type_errror: "証明書タイプに問題が発生しています。<br>担当部署までお問い合わせ下さい。"
+      list_purpose_type_errror: "証明書タイプに問題が発生しています。担当部署までお問い合わせ下さい。"
       cert_expired: "期限切れ"
       cert_valid: "有効"
       cert_invalid: "無効"
@@ -71,7 +67,7 @@ ja:
       title: '証明書の詳細'
       req_seq: '申請番号'
       purpose_type: '証明書タイプ'
-      purpose_type_errror: "証明書タイプに問題が発生しています。<br>担当部署までお問い合わせ下さい。"      
+      purpose_type_errror: "証明書タイプに問題が発生しています。担当部署までお問い合わせ下さい。"      
       cert_status: '発行の状況'
       cert_requesting: '申請中です。'
       cert_valid: '発行完了済・有効です。'
