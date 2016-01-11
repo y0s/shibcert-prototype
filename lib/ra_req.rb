@@ -21,9 +21,18 @@ class RaReq
 
   def self.get_upload_url
     agent = Mechanize.new
-    agent.cert = SHIBCERT_CONFIG[Rails.env]['certificate_file'] # config/shibcert.yml
-    agent.key =  SHIBCERT_CONFIG[Rails.env]['certificate_key_file'] # config/shibcert.yml
-
+    begin
+      agent.cert = SHIBCERT_CONFIG[Rails.env]['certificate_file'] # config/shibcert.yml
+    rescue => evar
+      Rails.logger.info "error: certificate_file '#{SHIBCERT_CONFIG[Rails.env]['certificate_file']}' #{evar.inspect}"
+      raise
+    end
+    begin
+      agent.key =  SHIBCERT_CONFIG[Rails.env]['certificate_key_file'] # config/shibcert.yml
+    rescue => evar
+      Rails.logger.info "error: certificater_key_file '#{SHIBCERT_CONFIG[Rails.env]['certificate_key_file']}' #{evar.inspect}"
+      raise
+    end
     agent.get('https://scia.secomtrust.net/upki-odcert/lra/SSLLogin.do') # Login with client certificate
 
     agent.page.frame_with(:name => 'hidari').click
