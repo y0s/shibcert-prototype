@@ -19,7 +19,7 @@ class RaReq
     end
   end
 
-  def self.get_upload_url
+  def self.get_upload_form
     agent = Mechanize.new
     begin
       agent.cert = SHIBCERT_CONFIG[Rails.env]['certificate_file'] # config/shibcert.yml
@@ -39,7 +39,9 @@ class RaReq
 
     form = agent.page.form_with(:name => 'MainMenuForm')
     form.forwardName = 'SP1011'     # 「発行・更新・失効」メニューのIDが 'SP1011'
-    form.submit
+
+    form2 = form.submit
+    form2.form_with(:name => 'SP1011')
   end
   
   def self.request(cert)
@@ -53,7 +55,8 @@ class RaReq
       return nil
     end
 
-    unless (user = User.find_by(id: cert.user_id))
+    user = User.find_by(id: cert.user_id)
+    unless user
       Rails.logger.info "RaReq.request failed because of User.find_by(id: #{cert.user_id}) == nil"
       return nil
     end
@@ -78,9 +81,8 @@ class RaReq
       end
     end
 
-    upload_url = self.get_upload_url
+    form = self.get_upload_form
 
-    form = upload_url.form_with(:name => 'SP1011')
     form.applyType = '1'            # 処理内容 1:発行, 2:更新, 3:失効
     form.radiobuttons_with(:name => 'errorFlg')[0].check # エラーが有れば全件処理を中止
     form.file_upload_with(:name => 'file'){|form_upload| # TSV をアップロード準備

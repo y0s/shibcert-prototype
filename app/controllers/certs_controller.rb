@@ -51,7 +51,6 @@ class CertsController < ApplicationController
 
     Rails.logger.debug "RaReq.request call: @cert = #{@cert.inspect}"
     RaReq.request(@cert)
-    Rails.logger.debug "RaReq.request called"
     
     @new_cert_id = @cert.id
   end
