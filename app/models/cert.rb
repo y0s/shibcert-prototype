@@ -4,6 +4,51 @@ class Cert < ActiveRecord::Base
   belongs_to :cert_state
   belongs_to :user
 
+  def self.update_from_mail(update_target:, value:, dn:)
+
+    certs = Cert.where("dn = ?", dn).order(id: :desc)
+
+    if certs.count == 0
+      logger.info("#{__method__}: not found any record DN=#{dn}")
+      return nil
+    end
+
+    case update_target
+
+    when 'pin'
+      expectState = Cert::State::NEW_REQUESTED_TO_NII
+      cert = certs.find_by(state: expectState)
+      if cert == nil
+        logger.info("#{__method__}: not found any record DN=#{dn} and state=#{expectState}")
+        return nil
+      end
+      cert.pin = value
+      cert.state = Cert::State::NEW_GOT_PIN
+      cert.save
+      logger.info("#{__method__}: update pin and state successfully DN=#{dn}")
+      return true
+
+    when 'x509_serialnumber'
+
+      expectState = Cert::State::NEW_DISPLAYED_PIN
+      cert = certs.find_by(state: expectState)
+      if cert == nil
+        logger.info("#{__method__}: not found any record DN=#{dn} and state=#{expectState}")
+        return nil
+      end
+      cert.serialnumber = value
+      cert.state = Cert::State::NEW_GOT_SERIAL
+      cert.save
+      logger.info("#{__method__}: update
+px509_serialnumber and state successfully DN=#{dn}")
+      return true
+
+    else
+      logger.info("not supported type='#{update_target}'")
+      return nil
+    end
+  end
+
   module PurposeType
     CLIENT_AUTH_CERTIFICATE = 5
     SMIME_CERTIFICATE = 7
