@@ -109,12 +109,6 @@ class MailProcessor
   end
 end
 
-MAIL_MAXLEN = 50000
-
-mailprocessor = MailProcessor.new()
-mailprocessor.read_from(ARGF, MAIL_MAXLEN)
-rec = mailprocessor.get_info    # ["pin", "CN=...C=JP", "12345ABCDE"] or ["serial", "CN=...C=JP", "123456789"]
-p rec
 
 certs = Cert.all                # ActiveRecord
 
@@ -140,3 +134,11 @@ Subject: [UPKI] クライアント証明書取得通知
 【対象証明書シリアル番号】
 　4097000000000000000
 =end
+if $0 == __FILE__ then
+  MAIL_MAXLEN = 50000
+
+  mp = MailProcessor.new()
+  mp.read_from(ARGF, MAIL_MAXLEN)
+  update_info = mp.get_info
+  Cert.update_from_mail(update_info)
+end
