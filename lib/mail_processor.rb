@@ -88,10 +88,11 @@ class MailProcessor
         record = f.readlines[1].split("\t") # 2nd line Tab separate
         pin = record[2]         # PIN: 3rd column
         dn = record[3]          # DN: 4th column
-        @logger.info("PIN: #{pin} for ${dn}")
+        @logger.info("PIN: #{pin} for #{dn}")
         return {update_target: 'pin', value: pin, dn: dn}
       end
     end
+    @logger.info("PIN: not found")
     return nil
   end
 
@@ -122,7 +123,7 @@ Subject: [UPKI] クライアント証明書取得通知
     mail_text_part.match(/^【対象証明書シリアル番号】\n　(\d+)$/m)
     serial = Regexp.last_match(1)
     if serial
-      @logger.info("serial: #{serial} for ${dn}")
+      @logger.info("serial: #{serial} for #{dn}")
       return {update_target: 'x509_serialnumber', value: serial, dn: dn}
     else
       @logger.info("serial: not found")
