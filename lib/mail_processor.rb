@@ -41,7 +41,7 @@ class MailProcessor
 
   def get_info
     unless @mail
-      @logger.error("mail type: no mail info")
+      @logger.error("no mail content")
       return nil
     end
 
@@ -57,7 +57,7 @@ class MailProcessor
       return nil
     end
   end
-  
+
   def get_pin
     unless @mail
       @logger.error("get_pin: no mail info")
@@ -87,12 +87,12 @@ class MailProcessor
       ar.each do |f|
         record = f.readlines[1].split("\t") # 2nd line Tab separate
         pin = record[2]         # PIN: 3rd column
-        dn = record[1000]       # DN: ? column xxxxxxxxxxxxxx
-        @logger.info("PIN: #{pin}")
-        return ["pin", pin]     # normal
+        dn = record[3]          # DN: 4th column
+        @logger.info("PIN: #{pin} for ${dn}")
+        return {update_target: 'pin', value: pin, dn: dn}
       end
     end
-    return nil                  # abnormal
+    return nil
   end
 
   def get_serial
