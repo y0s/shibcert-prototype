@@ -96,26 +96,6 @@ class MailProcessor
   end
 
   def get_serial
-    mail_text_part = @mail.text_part.decoded
-    mail_text_part.match(/^【対象証明書DN】\n　---------------------------------------------\n(.*)\n　---------------------------------------------$/m)
-    dn = Regexp.last_match(1).delete('　').split("\n").join(',')
-
-    mail_text_part.match(/^【対象証明書シリアル番号】\n　(\d+)$/m)
-    serial = Regexp.last_match(1)
-
-    @logger.info("DN: #{dn}")
-    @logger.info("serial: #{serial}")
-    return ["serial", dn, serial]
-  end
-end
-
-
-certs = Cert.all                # ActiveRecord
-
-# ToDo
-# rec の情報を certs に反映させる
-# DN と cert_state_id で検索をかけて，該当するレコードの pin または cert_serial を登録する
-
 
 =begin
 
@@ -134,6 +114,25 @@ Subject: [UPKI] クライアント証明書取得通知
 【対象証明書シリアル番号】
 　4097000000000000000
 =end
+
+    mail_text_part = @mail.text_part.decoded
+    mail_text_part.match(/^【対象証明書DN】\n　---------------------------------------------\n(.*)\n　---------------------------------------------$/m)
+    dn = Regexp.last_match(1).delete('　').split("\n").join(',')
+
+    mail_text_part.match(/^【対象証明書シリアル番号】\n　(\d+)$/m)
+    serial = Regexp.last_match(1)
+    if serial
+      @logger.info("serial: #{serial} for ${dn}")
+      return {update_target: 'x509_serialnumber', value: serial, dn: dn}
+    else
+      @logger.info("serial: not found")
+      return nil
+    end
+  end
+end
+
+
+
 if $0 == __FILE__ then
   MAIL_MAXLEN = 50000
 
@@ -142,3 +141,9 @@ if $0 == __FILE__ then
   update_info = mp.get_info
   Cert.update_from_mail(update_info)
 end
+
+# ToDo
+# rec の情報を certs に反映させる
+# DN と cert_state_id で検索をかけて，該当するレコードの pin または cert_serial を登録する
+
+
