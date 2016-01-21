@@ -61,6 +61,7 @@ px509_serialnumber and state successfully DN=#{dn}")
     NEW_RECEIVED_MAIL = 12 # 利用者から受付後、NIIへ申請後、メール受信済み
     NEW_GOT_PIN = 13 # 利用者から受付後、NIIへ申請後、メール受信済み、PIN受取済み
     NEW_DISPLAYED_PIN = 14 # 利用者から受付後、NIIへ申請後、メール受信済み、PIN受取済み、利用者へ受け渡し後
+    NEW_GOT_SERIAL = 15    # 利用者が証明書を取得してシリアル番号を受信
     NEW_ERROR = 19
 
     # 更新
