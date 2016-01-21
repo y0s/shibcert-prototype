@@ -7,21 +7,44 @@ one:
   user: one
   state: <%= Cert::State::NEW_REQUESTED_FROM_USER %>
   purpose_type: <%= Cert::PurposeType::SMIME_CERTIFICATE %>
-  dn: "CN=test01,OU=01,OU=IIMC,OU=Kyoto University,L=Academe,C=JP"
+  dn: CN=test01,OU=01,OU=IIMC,OU=Kyoto University,L=Academe,C=JP
 
 two:
   memo: MyString 2
   get_at: 2015-08-18 13:30:01
   expire_at: 2115-08-18 13:30:01
-  user: two
+  user: one
   cert_state_id: 1
   cert_type_id: 1
   state: <%= Cert::State::RENEW_REQUESTED_FROM_USER %>
   purpose_type: <%= Cert::PurposeType::CLIENT_AUTH_CERTIFICATE %>
-  dn: "CN=test02,OU=02,OU=IIMC,OU=Kyoto University,L=Academe,C=JP"
+  dn: CN=test01,OU=02,OU=IIMC,OU=Kyoto University,L=Academe,C=JP
+
+three:
+  memo: MyString 3
+  get_at: 2015-08-18 13:30:01
+  expire_at: 2115-08-18 13:30:01
+  user: one
+  cert_state_id: 1
+  cert_type_id: 1
+  state: <%= Cert::State::NEW_REQUESTED_TO_NII %>
+  purpose_type: <%= Cert::PurposeType::CLIENT_AUTH_CERTIFICATE %>
+  dn: CN=test01,OU=03,OU=IIMC,OU=Kyoto University,L=Academe,C=JP
+
+for:
+  memo: MyString 4
+  get_at: 2015-08-18 13:30:01
+  expire_at: 2115-08-18 13:30:01
+  user: one
+  cert_state_id: 1
+  cert_type_id: 1
+  state: <%= Cert::State::NEW_DISPLAYED_PIN %>
+  purpose_type: <%= Cert::PurposeType::CLIENT_AUTH_CERTIFICATE %>
+  dn: CN=test01,OU=04,OU=IIMC,OU=Kyoto University,L=Academe,C=JP
+
 
 old_one:
-  memo: MyString 3
+  memo: MyString old_one
   get_at: 2014-08-18 13:30:01
   expire_at: 2015-08-18 13:30:01
   pin: MyString
@@ -31,18 +54,17 @@ old_one:
   cert_type_id: 1
   state: <%= Cert::State::NEW_DISPLAYED_PIN %>
   purpose_type: <%= Cert::PurposeType::CLIENT_AUTH_CERTIFICATE %>
-  dn: "CN=test01,OU=01,OU=IIMC,OU=Kyoto University,L=Academe,C=JP"
+  dn: CN=test01,OU=01,OU=IIMC,OU=Kyoto University,L=Academe,C=JP
 
 old_two:
-  memo: MyString 1
+  memo: MyString old_two
   get_at: 2014-08-18 13:30:01
-  expire_at: 2-15-08-18 13:30:01
+  expire_at: 2015-08-18 13:30:01
   pin: MyString
   pin_get_at: 2014-08-18 13:30:01
-  user: two
+  user: one
   cert_state_id: 1
   cert_type_id: 1
   state: <%= Cert::State::NEW_DISPLAYED_PIN %>
   purpose_type: <%= Cert::PurposeType::SMIME_CERTIFICATE %>
-  dn: "CN=test02,OU=02,OU=IIMC,OU=Kyoto University,L=Academe,C=JP"
-
+  dn: CN=test01,OU=02,OU=IIMC,OU=Kyoto University,L=Academe,C=JP
