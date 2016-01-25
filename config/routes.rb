@@ -1,15 +1,14 @@
 Shibcert::Application.routes.draw do
   scope '(:locale)', locale: /ja|en/ do  
-    root "certs#index"
-    
-    get "certs/request_select"
-    post "certs/request_result"
+    root "certs#index", as: "locale_root"
     
     resources :certs do
       member do
         post "edit_memo_remote"
       end
     end
+
+    post "certs/request_result"
     
     resources :cert_states
     
@@ -80,4 +79,5 @@ Shibcert::Application.routes.draw do
     #     resources :products
     #   end
   end
+  root to: redirect("/#{I18n.default_locale}")
 end

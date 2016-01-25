@@ -1,3 +1,4 @@
+<% if current_user # because sometimes unreasonably called without layout %>
 <h3><%= t('.dashboard_title') %></h3>
 <br>
 <h4><%= t('.req_title') %></h4>
@@ -73,3 +74,4 @@
   </tbody>
 </table>
 <br>
+<% end %>

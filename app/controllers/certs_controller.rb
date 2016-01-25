@@ -5,7 +5,9 @@ class CertsController < ApplicationController
   # GET /certs
   # GET /certs.json
   def index
-    @certs = Cert.where(user_id: current_user.id)
+    if current_user
+      @certs = Cert.where(user_id: current_user.id)
+    end
   end
 
   # GET /certs/1
