@@ -60,15 +60,29 @@
 		    <% if Time.now > cert.expire_at %>				
 		      <span style="color:red;"><%= t('.cert_valid') %></span>
 		    <% else %>
-		      <span style="color:gray;"><%= t('.cert_invalid') %></span>		
-		    <% end %>
+		      <span style="color:gray;"><%= t('.cert_invalid') %></span>				    <% end %>
 		  <% end %>
 		<% else %>		
 		<span style="color:gray;"><%= t('.cert_requesting') %></span>
 		<% end %>
 	  </td>
       <td><%= cert.memo %></td>		
-      <td><%= link_to t('.update'), {action: "index"}, {class: "btn btn-primary"} %> <%= link_to t('.disable'), {action: "index"}, {class: "btn btn-primary"} %></td>
+      <td>
+		<% if cert.state == Cert::State::NEW_GOT_SERIAL %>
+		<%= link_to t('.update'), {action: "index"}, {class: "btn btn-primary"} %>
+		<% else %>
+		<div class="btn btn-default" disabled="disabled">
+		  <%= t('.update') %>
+		</div>
+		<% end %>
+
+		<% if cert.state == Cert::State::NEW_GOT_SERIAL %>
+		<%= link_to t('.disable'), {action: "index"}, {class: "btn btn-primary"} %>
+		<% else %>
+		<div class="btn btn-default" disabled="disabled">
+		  <%= t('.disable') %>
+		</div>
+		<% end %>
       </tr>
     <% end %>
   </tbody>
