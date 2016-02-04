@@ -85,9 +85,8 @@ class MailProcessor
     
     Zip::Archive.open_buffer(zipstream) do |ar|
       ar.each do |f|
-        record = f.readlines[1].split("\t") # 2nd line Tab separate
-        pin = record[2]         # PIN: 3rd column
-        dn = record[3]          # DN: 4th column
+        record = f.read.split("\n")[1] # 2nd line
+        pin, dn = record.split("\t")[2,3]
         @logger.info("PIN: #{pin} for #{dn}")
         return {update_target: 'pin', value: pin, dn: dn}
       end
