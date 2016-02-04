@@ -19,22 +19,23 @@ class MailProcessor
     @logger = Logger.new('log/mail_processor.log')
     @logger.progname = "#{$0}[#{$$}]"
     @logger.info("start")
+    @logger.info("Process.(uid,euid)=(#{Process.uid},#{Process.euid})")
   end
 
   def read_from(stream, maxlen=50000)
     mail_eml = ARGF.read(maxlen)
     if mail_eml.size >= maxlen
-      logger.info("exit: too large mail (>#{maxlen.to_s})")
+      @logger.info("exit: too large mail (>#{maxlen.to_s})")
       exit
     end
     @mail = Mail.read_from_string(mail_eml)
     unless @mail.from == ['ca-support@ml.secom-sts.co.jp']
-      logger.info("exit: skip From: #{@mail.from}")
+      @logger.info("exit: skip From: #{@mail.from}")
       exit
     end
 
     unless @mail.parts[1].content_type == 'application/pkcs7-signature; name=smime.p7s; smime-type=signed-data'
-      logger.info("exit: no digital signature found")
+      @logger.info("exit: no digital signature found")
       exit
     end
   end
@@ -69,6 +70,7 @@ class MailProcessor
     agent = Mechanize.new
 
     page = agent.get(url)
+
     unless page.form_with
       @logger.info('mechanize: error stop, no form with spEntranceCliPin.do')
       return nil
@@ -82,7 +84,8 @@ class MailProcessor
     page = page.form_with(:action => '/upki-odcert/download/spDLCliPin.do').submit
 
     zipstream = page.body       # ZIP binary
-    
+    @logger.info("zipstream: #{zipstream.inspect}")
+
     Zip::Archive.open_buffer(zipstream) do |ar|
       ar.each do |f|
         record = f.read.split("\n")[1] # 2nd line
