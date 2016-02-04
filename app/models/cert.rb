@@ -30,8 +30,10 @@ class Cert < ActiveRecord::Base
 
     when 'x509_serialnumber'
 
-      expectState = Cert::State::NEW_DISPLAYED_PIN
-      cert = certs.find_by(state: expectState)
+      cert = nil
+      certs.each do |c|
+        cert = c if c.state == Cert::State::NEW_DISPLAYED_PIN || c.state == Cert::State::NEW_GOT_PIN
+      end
       if cert == nil
         logger.info("#{__method__}: not found any record DN=#{dn} and state=#{expectState}")
         return nil
