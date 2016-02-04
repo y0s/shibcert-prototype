@@ -24,7 +24,7 @@ development:
   cert_download_type: '1'
   admin_name: 'shibcert.iimc.kyoto-u.ac.jp'
   admin_ou: 'Institute for Information Management and Communication'
-  admin_mail: 'shibcert@iimc.kyoto-u.ac.jp'
+  admin_mail: 'shibcert-sys@iimc.kyoto-u.ac.jp'
   user_ou: 'Institute for Information Management and Communication'
 
   base_dn: OU=dev,OU=Institute for Information Management and Communication,O=Kyoto University,L=Academe,C=JP
@@ -36,7 +36,7 @@ test:
   cert_download_type: '1'
   admin_name: 'shibcert.iimc.kyoto-u.ac.jp'
   admin_ou: 'Institute for Information Management and Communication'
-  admin_mail: 'shibcert@iimc.kyoto-u.ac.jp'
+  admin_mail: 'shibcert-sys@iimc.kyoto-u.ac.jp'
   user_ou: 'Institute for Information Management and Communication'
 
   base_dn: OU=test,OU=Institute for Information Management and Communication,O=Kyoto University,L=Academe,C=JP
