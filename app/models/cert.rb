@@ -25,7 +25,7 @@ class Cert < ActiveRecord::Base
       cert.pin = value
       cert.state = Cert::State::NEW_GOT_PIN
       cert.save
-      logger.info("#{__method__}: update pin and state successfully DN=#{dn}")
+      logger.info("#{__method__}: updated pin and state for DN:#{dn}")
       return true
 
     when 'x509_serialnumber'
@@ -39,8 +39,7 @@ class Cert < ActiveRecord::Base
       cert.serialnumber = value
       cert.state = Cert::State::NEW_GOT_SERIAL
       cert.save
-      logger.info("#{__method__}: update
-px509_serialnumber and state successfully DN=#{dn}")
+      logger.info("#{__method__}: updated x509_serialnumber and state for DN:#{dn}")
       return true
 
     else
