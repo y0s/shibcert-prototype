@@ -36,11 +36,7 @@
   <tr>
 	<td><strong><%= t('.pin_number') %></strong></td>
 	<td>
-	<% if @cert.pin %>
-	<%= @cert.pin %>
-	<% else %>
-	<%= t('.pin_wait') %>
-	<% end %>
+	  <%= @cert.pin || t('.pin_wait') %>
 	</td>
   </tr>
   <tr>
@@ -65,11 +61,7 @@
   <tr>
 	<td><strong><%= t('.dn') %></strong></td>
 	<td>
-	  <% if @cert.dn %>
-	  <%= @cert.dn %>
-	  <% else %>
-	  <%= t('.dn_error') %>
-	  <% end %>
+	  <%= @cert.dn || t('.dn_error') %>
 	</td>
   </tr>
   
