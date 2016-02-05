@@ -11,7 +11,7 @@
 	<td>
 	  <% if t('common.purpose_type.t' + @cert.purpose_type.to_s) %>
 	  <%= t('common.purpose_type.t' + @cert.purpose_type.to_s)	%>
-	  <% else %>  
+	  <% else %>
 	  <%= t('purpose_type_errror') %>
 	  <% end %>
 	</td>
@@ -21,15 +21,15 @@
 	<td>
 	  <% case @cert.state %>
       <% when 0 %>
-	  <%= t('.cert_requesting') %>	  
+	  <%= t('.cert_requesting') %>
 	  <% when 1 %>
-	  <%= t('.cert_valid') %>	  
+	  <%= t('.cert_valid') %>
 	  <% when 2 %>
-	  <%= t('.cert_expired') %>	  
+	  <%= t('.cert_expired') %>
 	  <% when 3 %>
-	  <%= t('.cert_invalid') %>	  
+	  <%= t('.cert_invalid') %>
 	  <% else %>
-	  <%= t('.cert_error') %>	  
+	  <%= t('.cert_error') %>
 	  <% end %>
 	</td>
   </tr>
@@ -64,8 +64,8 @@
 	  <%= @cert.dn || t('.dn_error') %>
 	</td>
   </tr>
-  
-  
+
+
   <tr>
 	<td><strong><%= t('.memo') %></strong></td>
 	<td>
@@ -78,11 +78,10 @@
 	</td>
   </tr>
 
-  
+
 </table>
 <% else %>
 <p> <%= t('.cert_error') %></p>
 <% end %>
 
 <%= link_to t('.to_dashboard'), {controller: "certs", action: "index"} %>
-
