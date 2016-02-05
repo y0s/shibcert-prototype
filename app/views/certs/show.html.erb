@@ -42,19 +42,31 @@
   <tr>
 	<td><strong><%= t('.date') %></strong></td>
 	<td>
-	  <%= I18n.l(@cert.created_at) %>
+          <% if @cert.created_at %>
+            <%= I18n.l(@cert.created_at) %>
+          <% else %>
+            <%= t('.cert_unavailable') %>
+          <% end %>
 	</td>
   </tr>
   <tr>
 	<td><strong><%= t('.issue_date') %></strong></td>
 	<td>
-	  <%= @cert.get_at || t('.cert_unavailable') %>
+          <% if @cert.get_at %>
+            <%= I18n.l(@cert.get_at) %>
+          <% else %>
+            <%= t('.cert_unavailable') %>
+          <% end %>
 	</td>
   </tr>
   <tr>
 	<td><strong><%= t('.expire_date') %></strong></td>
 	<td>
-	  <%= @cert.expire_at || t('.cert_unavailable') %>
+          <% if @cert.expire_at %>
+            <%= I18n.l(@cert.expire_at) %>
+          <% else %>
+            <%= t('.cert_unavailable') %>
+          <% end %>
 	</td>
   </tr>
 
