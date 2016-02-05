@@ -52,21 +52,13 @@
   <tr>
 	<td><strong><%= t('.issue_date') %></strong></td>
 	<td>
-	  <% if @cert.pin %>
-	  <%= @cert.pin %>
-	  <% else %>
-	  <%= t('.cert_unavailable') %>	  
-	  <% end %>
+	  <%= @cert.get_at || t('.cert_unavailable') %>
 	</td>
   </tr>
   <tr>
 	<td><strong><%= t('.expire_date') %></strong></td>
 	<td>
-	  <% if @cert.pin %>
-	  <%= @cert.pin %>
-	  <% else %>
-	  <%= t('.cert_unavailable') %>	  
-	  <% end %>
+	  <%= @cert.expire_at || t('.cert_unavailable') %>
 	</td>
   </tr>
 
