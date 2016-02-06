@@ -71,6 +71,7 @@ class Cert < ActiveRecord::Base
     RENEW_RECEIVED_MAIL = 22 # 利用者から受付後、NIIへ申請後、メール受信済み
     RENEW_GOT_PIN = 23 # 利用者から受付後、NIIへ申請後、メール受信済み、PIN受取済み
     RENEW_DISPLAYED_PIN = 24 # 利用者から受付後、NIIへ申請後、メール受信済み、PIN受取済み、利用者へ受け渡し後
+    RENEW_GOT_SERIAL = 25    # 利用者が証明書を取得してシリアル番号を受信
     RENEW_ERROR = 29
 
     # 失効
