@@ -19,18 +19,7 @@
   <tr>
 	<td><strong><%= t('.cert_status') %></strong></td>
 	<td>
-	  <% case @cert.state %>
-      <% when 0 %>
-	  <%= t('.cert_requesting') %>
-	  <% when 1 %>
-	  <%= t('.cert_valid') %>
-	  <% when 2 %>
-	  <%= t('.cert_expired') %>
-	  <% when 3 %>
-	  <%= t('.cert_invalid') %>
-	  <% else %>
-	  <%= t('.cert_error') %>
-	  <% end %>
+          <%= t('.cert_status_msg')[@cert.x509_state] %>
 	</td>
   </tr>
   <tr>

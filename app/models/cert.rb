@@ -50,6 +50,33 @@ class Cert < ActiveRecord::Base
     end
   end
 
+  def x509_state
+    s = state
+
+    if State::REVOKE_REQUESTED_TO_NII <= s && s <= State::REVOKED
+      return X509State::REVOKED
+    end
+    if s == State::NEW_ERROR || s == State::RENEW_ERROR || s == State::REVOKE_ERROR
+      return X509State::ERROR
+    end
+    if expire_at != nil && expire_at <= Time.now
+      return X509State::EXPIRED
+    end
+
+    if State::NEW_GOT_PIN    <= s && s <= State::NEW_GOT_SERIAL ||
+       State::RENEW_GOT_PIN  <= s && s <= State::RENEW_GOT_SERIAL ||
+       state == State::REVOKE_REQUESTED_FROM_USER # exceptional
+      return X509State::VALID
+    end
+
+    if State::NEW_REQUESTED_FROM_USER    <= s && s <= State::NEW_RECEIVED_MAIL ||
+       State::RENEW_REQUESTED_FROM_USER  <= s && s <= State::RENEW_RECEIVED_MAIL
+      return X509State::REQUESTING
+    end
+
+    return X509State::UNKNOWN
+  end
+
   module PurposeType
     CLIENT_AUTH_CERTIFICATE = 5
     SMIME_CERTIFICATE = 7
@@ -82,5 +109,14 @@ class Cert < ActiveRecord::Base
     REVOKE_ERROR = 39
 
     UNKNOWN = -1                # 不明
+  end
+
+  module X509State
+    REQUESTING = 0
+    VALID = 1
+    EXPIRED = 2
+    REVOKED = 3
+    ERROR = 4
+    UNKNOWN = 5
   end
 end
