@@ -44,6 +44,18 @@ class Cert < ActiveRecord::Base
       logger.info("#{__method__}: updated x509_serialnumber and state for DN:#{dn}")
       return true
 
+    when 'revoked_x509_serialnumber'
+      expectSerial = value
+      cert = certs.find_by(serialnumber: expectSerial)
+      if cert == nil
+        logger.info("#{__method__}: not found any record DN=#{dn} and serialnumber=#{expectSerial}")
+        return nil
+      end
+      cert.state = Cert::State::REVOKED
+      cert.save
+      logger.info("#{__method__}: REVOKED serialnumber=#{expectSerial}, DN:#{dn}")
+      return true
+
     else
       logger.info("not supported type='#{update_target}'")
       return nil

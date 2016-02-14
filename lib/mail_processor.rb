@@ -53,6 +53,9 @@ class MailProcessor
     when '[UPKI] クライアント証明書取得通知'
       @logger.info("mail type: serial number")
       self.get_serial
+    when '[UPKI] クライアント証明書失効完了通知'
+      @logger.info("mail type: revoked")
+      self.get_revoked_serial
     else
       @logger.info("mail type: unknown, exit")
       return nil
@@ -129,6 +132,22 @@ Subject: [UPKI] クライアント証明書取得通知
       return {update_target: 'x509_serialnumber', value: serial, dn: dn}
     else
       @logger.info("serial: not found")
+      return nil
+    end
+  end
+
+  def get_revoked_serial
+    mail_text_part = @mail.text_part.decoded
+    mail_text_part.match(/^【失効証明書DN】\n　---------------------------------------------\n(.*)\n　---------------------------------------------$/m)
+    dn = Regexp.last_match(1).delete('　').split("\n").join(',')
+
+    mail_text_part.match(/^【失効証明書シリアル番号】\n　(\d+)$/m)
+    serial = Regexp.last_match(1)
+    if serial
+      @logger.info("revoked_serial: #{serial} for #{dn}")
+      return {update_target: 'revoked_x509_serialnumber', value: serial, dn: dn}
+    else
+      @logger.info("revoked_serial: not found")
       return nil
     end
   end
