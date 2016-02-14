@@ -35,7 +35,7 @@ class Cert < ActiveRecord::Base
         cert = c if c.state == Cert::State::NEW_DISPLAYED_PIN || c.state == Cert::State::NEW_GOT_PIN
       end
       if cert == nil
-        logger.info("#{__method__}: not found any record DN=#{dn} and state=#{expectState}")
+        logger.info("#{__method__}: not found any record DN=#{dn} and state=NEW_DISPLAY_PIN|NEW_GOT_PIN")
         return nil
       end
       cert.serialnumber = value
