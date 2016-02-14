@@ -10,6 +10,94 @@ require 'pp'
 require 'logger'
 
 class RaReq
+  module New
+    def applyType
+      1
+    end
+
+    def nextState
+      Cert::State::NEW_REQUESTED_TO_NII
+    end
+
+    def errorState
+      Cert::State::NEW_ERROR
+    end
+
+    def generate_tsv(cert, user)
+      [
+        cert.dn,
+        cert.purpose_type,
+        SHIBCERT_CONFIG[Rails.env]['cert_download_type'] || '1', # 1:P12個別
+        '', '', '', '',
+        SHIBCERT_CONFIG[Rails.env]['admin_name'],
+        SHIBCERT_CONFIG[Rails.env]['admin_ou'],
+        SHIBCERT_CONFIG[Rails.env]['admin_mail'],
+        user.name,
+        'NIIcert' + Time.now.strftime("%Y%m%d-%H%M%S"),
+        SHIBCERT_CONFIG[Rails.env]['user_ou'],
+        user.email,
+      ].join("\t")
+    end
+  end
+
+  module Renew
+    def applyType
+      2
+    end
+
+    def nextState
+      Cert::State::RENEW_REQUESTED_TO_NII
+    end
+
+    def errorState
+      Cert::State::RENEW_ERROR
+    end
+
+    def generate_tsv(cert, user)
+      [
+        cert.dn,
+        cert.purpose_type,
+        SHIBCERT_CONFIG[Rails.env]['cert_download_type'] || '1', # 1:P12個別
+        cert.serialnumber,
+        '', '', '',
+        SHIBCERT_CONFIG[Rails.env]['admin_name'],
+        SHIBCERT_CONFIG[Rails.env]['admin_ou'],
+        SHIBCERT_CONFIG[Rails.env]['admin_mail'],
+        user.name,
+        'NIIcert' + Time.now.strftime("%Y%m%d-%H%M%S"),
+        SHIBCERT_CONFIG[Rails.env]['user_ou'],
+        user.email,
+      ].join("\t")
+    end
+  end
+
+  module Revoke
+    def applyType
+      3
+    end
+
+    def nextState
+      Cert::State::REVOKE_REQUESTED_TO_NII
+    end
+
+    def errorState
+      Cert::State::REVOKE_ERROR
+    end
+
+    def generate_tsv(cert, user)
+      [
+        cert.dn,                  # 1
+        '','',
+        cert.serialnumber,   # 4
+        cert.revoke_reason,       # 5
+        cert.revoke_comment,      # 6
+        '', '', '',
+        SHIBCERT_CONFIG[Rails.env]['admin_mail'], # 10
+        '', '', '',
+        user.email,               # 14
+      ].join("\t")
+    end
+  end
 
   def initialize
     %w(admin_name admin_ou admin_mail user_ou).each do |key|
@@ -46,10 +134,12 @@ class RaReq
   
   def self.request(cert)
     case cert.state
-    when Cert::State::NEW_REQUESTED_FROM_USER,
-         Cert::State::RENEW_REQUESTED_FROM_USER,
-         Cert::State::REVOKE_REQUESTED_FROM_USER
-      ;                         # NOP
+    when Cert::State::NEW_REQUESTED_FROM_USER
+      extend New
+    when Cert::State::RENEW_REQUESTED_FROM_USER
+      extend Renew
+    when Cert::State::REVOKE_REQUESTED_FROM_USER
+      extend Revoke
     else
       Rails.logger.info "RaReq.request failed because of cert.state is #{cert.state})"
       return nil
@@ -61,18 +151,7 @@ class RaReq
       return nil
     end
 
-    tsv = [cert.dn,
-           cert.purpose_type,
-           SHIBCERT_CONFIG[Rails.env]['cert_download_type'] || '1', # 1:P12個別
-           '', '', '', '',
-           SHIBCERT_CONFIG[Rails.env]['admin_name'],
-           SHIBCERT_CONFIG[Rails.env]['admin_ou'],
-           SHIBCERT_CONFIG[Rails.env]['admin_mail'],
-           user.name,
-           'NIIcert' + Time.now.strftime("%Y%m%d-%H%M%S"),
-           SHIBCERT_CONFIG[Rails.env]['user_ou'],
-           user.email,
-          ].join("\t")
+    tsv = generate_tsv(cert, user).encode('cp932')
     Rails.logger.debug "#{__method__}: tsv #{tsv.inspect}"
 
     if Rails.env == 'development' then
@@ -83,7 +162,7 @@ class RaReq
 
     form = self.get_upload_form
 
-    form.applyType = '1'            # 処理内容 1:発行, 2:更新, 3:失効
+    form.applyType = applyType            # 処理内容 1:発行, 2:更新, 3:失効
     form.radiobuttons_with(:name => 'errorFlg')[0].check # エラーが有れば全件処理を中止
     form.file_upload_with(:name => 'file'){|form_upload| # TSV をアップロード準備
       form_upload.file_data = tsv                        # アップロードする内容を文字列として渡す
@@ -99,12 +178,12 @@ class RaReq
     end
 
     if Regexp.new("ファイルのアップロード処理が完了しました。").match(submitted_form.body.encode("utf-8", "euc-jp"))
-      cert.state = Cert::State::NEW_REQUESTED_TO_NII
+      cert.state = nextState
       cert.save
       Rails.logger.debug "#{__method__}: upload success"
       return cert
     else
-      cert.state = Cert::State::NEW_ERROR
+      cert.state = errorState
       cert.save
       Rails.logger.debug "#{__method__}: upload fail"
       return nil
