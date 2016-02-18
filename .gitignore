@@ -26,4 +26,8 @@
 # Ignore certificates
 /config/certificates/*
 
+# Ignore tempfile for tests
+body.html
+sample.tsv
+
 .ruby-version
