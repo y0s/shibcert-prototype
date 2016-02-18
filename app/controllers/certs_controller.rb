@@ -1,7 +1,7 @@
 # coding: utf-8
 class CertsController < ApplicationController
   before_action :set_cert, only: [:edit, :update, :destroy]
-  before_action :set_cert_of_user, only: [:show, :edit_memo_remote]
+  before_action :set_cert_of_user, only: [:show, :edit_memo_remote, :request_result]
   # GET /certs
   # GET /certs.json
   def index
@@ -21,8 +21,8 @@ class CertsController < ApplicationController
   def request_select
   end
 
-  # POST /certs/request_result
-  def request_result
+  # POST /certs/request_post [with RPG pattern]
+  def request_post
     # purpose_type: profile ID of
     #   https://certs.nii.ac.jp/archive/TSV_File_Format/client_tsv/
 
@@ -53,8 +53,13 @@ class CertsController < ApplicationController
 
     Rails.logger.debug "RaReq.request call: @cert = #{@cert.inspect}"
     RaReq.request(@cert)
+ 
+    redirect_to request_result_path(@cert.id)
+  end
+
+  # POST /certs/request_post [with RPG pattern]
+  def request_result
     
-    @new_cert_id = @cert.id
   end
 
   # GET /certs/new

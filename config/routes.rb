@@ -8,7 +8,9 @@ Shibcert::Application.routes.draw do
       end
     end
 
-    post "certs/request_result"
+    post "certs/request_post"
+    get "certs/request_result/:id", to: 'certs#request_result', \
+        as: 'request_result'
     
     resources :cert_states
     
