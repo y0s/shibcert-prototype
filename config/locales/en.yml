@@ -41,6 +41,7 @@ en:
       req_title: "Request with Certification Type"
       req_bt: "Request %{type}"
       confirm: "This system will send your request to the Issuer(NII). Are your sure?"
+      no_multi_smime: "Note: It's not allowed to request multiple S/MIME certs."
       list_title: "Issue Status of Your Certifications (Click request number to show the detail.)"
       list_seq: "Request Number"
       list_type: "Type of the Cert"

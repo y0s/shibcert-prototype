@@ -2,15 +2,18 @@ Shibcert::Application.routes.draw do
   scope '(:locale)', locale: /ja|en/ do  
     root "certs#index", as: "locale_root"
     
+    post "certs/request_post"
+    get "certs/request_result/:id", to: 'certs#request_result', \
+        as: 'request_result'
+
+    get "certs/admin"
+    
     resources :certs do
       member do
         post "edit_memo_remote"
       end
     end
 
-    post "certs/request_post"
-    get "certs/request_result/:id", to: 'certs#request_result', \
-        as: 'request_result'
     
     resources :cert_states
     

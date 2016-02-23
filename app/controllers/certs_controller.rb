@@ -7,8 +7,21 @@ class CertsController < ApplicationController
   def index
     if current_user
       @certs = Cert.where(user_id: current_user.id)
+      @smime_num = Cert.where(user_id: current_user.id, purpose_type: 7, state: Cert::State::NEW_GOT_SERIAL).count() # FIXME: rewrite to cover multiple states
     end
   end
+
+  def admin
+    @certs = nil
+    if current_user
+      if current_user.admin == true
+        @certs = Cert.all
+      else
+        return
+      end
+    end
+ end
+  
 
   # GET /certs/1
   # GET /certs/1.json
@@ -25,6 +38,12 @@ class CertsController < ApplicationController
   def request_post
     # purpose_type: profile ID of
     #   https://certs.nii.ac.jp/archive/TSV_File_Format/client_tsv/
+
+    # S/MIME-multiple-application guard (failsafe)
+    smime_num = Cert.where(user_id: current_user.id, purpose_type: 7, state: Cert::State::NEW_GOT_SERIAL).count() # FIXME: rewrite to cover multiple states
+    if (smime_num > 0)
+      return # FIXME: need error message
+    end
 
     ActiveRecord::Base.transaction do      
       current_user.cert_serial_max += 1

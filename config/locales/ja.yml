@@ -42,6 +42,7 @@ ja:
       req_bt: "%{type}を申請"
       confirm: "発行元(国立情報学研究所)に申請を送信します。よろしいですか？"
       linktext: "を申請"
+      no_multi_smime: "※S/MIME証明書は複数申請できません"
       list_title: "証明書の発行状況 (申請番号をクリックで詳細表示)"
       list_seq: "申請番号"
       list_type: "証明書の種類"
@@ -89,6 +90,8 @@ ja:
       memo_bt: 'メモを保存'
       cert_error: '指定された証明書が存在しません。何らかのエラーの可能性がありますので、管理担当者までご連絡下さい。'
       to_dashboard: 'ダッシュボードページに戻る'
+    admin:
+      admin_title: "証明書発行申請管理ページ"
       
 # copy from http://avosalmon.hatenablog.com/entry/2014/06/15/%E3%80%90Rails%E3%80%91date_select%E3%81%A7%22undefined_method_for_translation_missing_ja_date_order_string%22
   date:

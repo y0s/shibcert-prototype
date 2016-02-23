@@ -1,0 +1,81 @@
+<% if current_user # because sometimes unreasonably called without layout %>
+<h3><%= t('certs.index.dashboard_title') %></h3>
+<br>
+<h4><%= t('certs.index.req_title') %></h4>
+<br>
+
+<div class="container">
+<br>
+<h4><%= t('certs.index.list_title') %></h4>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= t('certs.index.list_seq') %></th>	  
+      <th><%= t('certs.index.list_type') %></th>
+      <th><%= t('certs.index.list_date') %></th>
+      <th><%= t('certs.index.list_available') %></th>
+      <th><%= t('certs.index.list_action') %></th>
+    </tr>
+  </thead>
+
+  <% unless @certs.nil? %>
+  <%= @user_name %>
+  <tbody>
+    <% @certs.each do |cert| %>
+    <tr>
+	  <td><%= link_to cert.req_seq.to_s, {action: "show", id:cert.id}, {class: "btn btn-default"}   %></td>	  
+	  <td>
+		<% purpose_cap =  %>
+		<% if t('common.purpose_type.t' + cert.purpose_type.to_s) %>
+		<%= t('common.purpose_type.t' + cert.purpose_type.to_s) %>
+		<% else %>  
+		t('certs.index.list_purpose_type_error')
+		<% end %>
+	  </td>
+      <td><%= I18n.l Date.parse(cert.created_at.to_s) %></td>	  
+      <td>
+		<% if cert.pin_get_at and cert.expire_at %>
+		  <% if Time.now > cert.expire_at %>		
+	  	    <span style="color:green;"><%= t('certs.index.cert_expired') %></span>
+		  <% else %>
+		    <% if Time.now > cert.expire_at %>				
+		      <span style="color:red;"><%= t('certs.index.cert_valid') %></span>
+		    <% else %>
+		      <span style="color:gray;"><%= t('certs.index.cert_invalid') %></span>				    <% end %>
+		  <% end %>
+		<% else %>		
+		<span style="color:gray;"><%= t('certs.index.cert_requesting') %></span>
+		<% end %>
+	  </td>
+      <td>
+
+		<% if cert.state == Cert::State::NEW_GOT_SERIAL %>
+		<%= link_to t('certs.admin.manual_enable'), {action: "index"}, {class: "btn btn-primary"} %>
+		<% else %>
+		<div class="btn btn-default" disabled="disabled">
+		  <%= t('certs.admin.manual_enable') %>
+		</div>
+		<% end %>
+
+		<% if cert.state == Cert::State::NEW_GOT_SERIAL %>
+		<%= link_to t('certs.admin.manual_update'), {action: "index"}, {class: "btn btn-primary"} %>
+		<% else %>
+		<div class="btn btn-default" disabled="disabled">
+		  <%= t('certs.admin.manual_update') %>
+		</div>
+		<% end %>
+
+		<% if cert.state == Cert::State::NEW_GOT_SERIAL %>
+		<%= link_to t('certs.admin.force_disable'), {action: "index"}, {class: "btn btn-primary"} %>
+		<% else %>
+		<div class="btn btn-default" disabled="disabled">
+		  <%= t('certs.admin.force_disable') %>
+		</div>
+		<% end %>
+      </tr>
+    <% end %>
+  </tbody>
+  <% end %>
+</table>
+<br>
+<% end %>
