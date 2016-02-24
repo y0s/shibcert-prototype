@@ -1,2 +1,0 @@
-module CertStatesHelper
-end
