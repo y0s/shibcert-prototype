@@ -2,6 +2,13 @@
 class CertsController < ApplicationController
   before_action :set_cert, only: [:edit, :update, :destroy]
   before_action :set_cert_of_user, only: [:show, :edit_memo_remote, :request_result]
+
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
+
+  def record_not_found
+    render file: Rails.root.join('public/404.html'), status: 404, layout: false, content_type: 'text/html'  
+  end
+  
   # GET /certs
   # GET /certs.json
   def index
@@ -20,13 +27,14 @@ class CertsController < ApplicationController
         return
       end
     end
- end
-  
+  end
 
   # GET /certs/1
   # GET /certs/1.json
   def show
-    # FIXME: user authorization needed
+    unless /\d+/.match(params[:id])
+      return 
+    end
   end
 
   # GET /certs/request_select
@@ -148,15 +156,18 @@ class CertsController < ApplicationController
 
   def set_cert_of_user
     # FIXME: fix for not found error
-    begin
-      mycert = Cert.find(params[:id])
-    rescue ActiveRecord::RecordNotFound => e
-      mycert = nil
-    end
+#    begin
+#      mycert = Cert.find(params[:id])
+#    rescue ActiveRecord::RecordNotFound => e
+#      mycert = nil
+    #    end
+
+    mycert = Cert.find(params[:id])
+    
     if mycert and mycert.user_id == current_user.id
       @cert = mycert
     else
-      @cert = nil
+      raise ActiveRecord::RecordNotFound
     end
   end
   

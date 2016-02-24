@@ -1,4 +1,6 @@
 Shibcert::Application.routes.draw do
+  root to: redirect("/#{I18n.default_locale}")
+
   scope '(:locale)', locale: /ja|en/ do  
     root "certs#index", as: "locale_root"
     
@@ -15,15 +17,15 @@ Shibcert::Application.routes.draw do
     end
 
     
-    resources :cert_states
+#    resources :cert_states
     
-    resources :cert_types
+#    resources :cert_types
     
-    resources :users
+#    resources :users
     
-    resources :roles
+#    resources :roles
     
-    resources :requests
+#    resources :requests
     
     get '/auth/:provider/callback' => 'sessions#create'
     get '/auth/:failure' => 'sessions#failure'
@@ -84,5 +86,4 @@ Shibcert::Application.routes.draw do
     #     resources :products
     #   end
   end
-  root to: redirect("/#{I18n.default_locale}")
 end
