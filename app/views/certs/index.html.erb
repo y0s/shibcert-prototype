@@ -4,7 +4,6 @@
 <h4><%= t('.req_title') %></h4>
 <br>
 
-
 <div class="container">
 	<%= form_tag({controller: "certs", action: "request_post"}, {class: "form-inline"}) do %>
 	<%= hidden_field :cert, :purpose_type, :value => 5 %>
