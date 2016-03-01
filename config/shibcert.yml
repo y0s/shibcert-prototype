@@ -17,6 +17,18 @@ label:
       5: "for Campus Netork(KUINS) Authentication"  
       7: "for Campus Mail(KUMAIL, KUMOI)"
 
+production:
+  certificate_file: "config/certificates/client.cer"
+  certificate_key_file:  "config/certificates/client.key"
+
+  cert_download_type: '1'
+  admin_name: 'shibcert.iimc.kyoto-u.ac.jp'
+  admin_ou: 'Institute for Information Management and Communication'
+  admin_mail: 'shibcert-sys@iimc.kyoto-u.ac.jp'
+  user_ou: 'Institute for Information Management and Communication'
+
+  base_dn: OU=dev,OU=Institute for Information Management and Communication,O=Kyoto University,L=Academe,C=JP
+
 development:
   certificate_file: "config/certificates/client.cer"
   certificate_key_file:  "config/certificates/client.key"
