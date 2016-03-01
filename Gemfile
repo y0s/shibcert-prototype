@@ -8,6 +8,11 @@ group :development, :test do
   gem 'sqlite3'
 end
 
+# Use sqlite3 as the database for Active Record
+group :production do
+  gem 'mysql2', '~> 0.3.18'
+end
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.2'
 
@@ -52,6 +57,9 @@ gem 'passenger'
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+
+# Use yaml dump for export/import DB records
+gem 'yaml_db'
 
 gem 'omniauth-github'
 gem 'omniauth-shibboleth'

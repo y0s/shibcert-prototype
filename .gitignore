@@ -26,6 +26,12 @@
 # Ignore certificates
 /config/certificates/*
 
+# Ignore database config
+/config/database.yml
+
+# Ignore precompiled assets for production
+/public/assets/*
+
 # Ignore tempfile for tests
 body.html
 sample.tsv

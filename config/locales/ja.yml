@@ -47,7 +47,7 @@ ja:
       list_seq: "申請番号"
       list_type: "証明書の種類"
       list_date: "申請日"
-      list_available: "状況"
+      list_available: "申請状況"
       list_memo: "メモ"
       list_action: "アクション"
       list_purpose_type_errror: "証明書タイプに問題が発生しています。担当部署までお問い合わせ下さい。"
@@ -68,9 +68,17 @@ ja:
       title: '証明書の詳細'
       req_seq: '申請番号'
       purpose_type: '証明書タイプ'
-      purpose_type_errror: "証明書タイプに問題が発生しています。担当部署までお問い合わせ下さい。"      
-      cert_status: '発行の状況'
+      purpose_type_errror: "証明書タイプに問題が発生しています。担当部署までお問い合わせ下さい。"
+      cert_status: "申請状況"      
       cert_status_msg:
+        - '申請中'
+        - '有効'
+        - '期限切れ'
+        - '失効'
+        - 'エラー発生 担当部署までお問い合わせください'
+        - '不明 担当部署までお問い合わせください'
+      x509_status: '証明書の状態'
+      x509_status_msg:
         - '申請中'
         - '有効'
         - '期限切れ'

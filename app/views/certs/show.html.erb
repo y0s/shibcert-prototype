@@ -19,7 +19,13 @@
   <tr>
 	<td><strong><%= t('.cert_status') %></strong></td>
 	<td>
-          <%= t('.cert_status_msg')[@cert.x509_state] %>
+          <%= t('.cert_status_msg')[@cert.state] %>
+	</td>
+  </tr>
+  <tr>
+	<td><strong><%= t('.x509_status') %></strong></td>
+	<td>
+          <%= t('.x509_status_msg')[@cert.x509_state] %>
 	</td>
   </tr>
   <tr>
