@@ -53,7 +53,9 @@
 	<% else %>
 	<div class="omniauth">
       <%= t('login.logintext')%><%= link_to t('login.loginlink'), "/auth/shibboleth" %><br>
+	  <% if Rails.env == 'development'  %>
       <%= t('login.otherlogintext')%><%= link_to t('login.loginlink'), "/auth/github" %>
+	  <% end %>
 	</div>
     <% end %>
   </div>
