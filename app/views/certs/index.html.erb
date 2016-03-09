@@ -44,7 +44,9 @@
       <th><%= t('.list_date') %></th>
       <th><%= t('.list_available') %></th>
       <th><%= t('.list_memo') %></th>
-      <th><%= t('.list_action') %></th>
+      <% if Rails.env == 'development' %>
+	  <th><%= t('.list_action') %></th>
+	  <% end %>
     </tr>
   </thead>
 
@@ -63,20 +65,11 @@
 	  </td>
       <td><%= I18n.l Date.parse(cert.created_at.to_s) %></td>	  
       <td>
-		<% if cert.pin_get_at and cert.expire_at %>
-		  <% if Time.now > cert.expire_at %>		
-	  	    <span style="color:green;"><%= t('.cert_expired') %></span>
-		  <% else %>
-		    <% if Time.now > cert.expire_at %>				
-		      <span style="color:red;"><%= t('.cert_valid') %></span>
-		    <% else %>
-		      <span style="color:gray;"><%= t('.cert_invalid') %></span>				    <% end %>
-		  <% end %>
-		<% else %>		
-		<span style="color:gray;"><%= t('.cert_requesting') %></span>
-		<% end %>
+        <%= t('certs.show.cert_status_msg')[cert.state] %>
 	  </td>
-      <td><%= cert.memo %></td>		
+      <td><%= cert.memo %></td>
+	  
+	  <% if Rails.env == 'development' %>
       <td>
 		<% if cert.state == Cert::State::NEW_GOT_SERIAL %>
 		<%= link_to t('.update'), {action: "index"}, {class: "btn btn-primary"} %>
@@ -85,7 +78,7 @@
 		  <%= t('.update') %>
 		</div>
 		<% end %>
-
+		
 		<% if cert.state == Cert::State::NEW_GOT_SERIAL %>
 		<%= link_to t('.disable'), {action: "index"}, {class: "btn btn-primary"} %>
 		<% else %>
@@ -93,7 +86,10 @@
 		  <%= t('.disable') %>
 		</div>
 		<% end %>
-      </tr>
+	  </td>		
+	  <% end %>
+    </tr>
+	
     <% end %>
   </tbody>
 </table>

@@ -44,6 +44,7 @@
           <% end %>
 	</td>
   </tr>
+  <% if Rails.env == 'development'  %>  
   <tr>
 	<td><strong><%= t('.issue_date') %></strong></td>
 	<td>
@@ -64,7 +65,8 @@
           <% end %>
 	</td>
   </tr>
-
+  <% end %>
+  
   <tr>
 	<td><strong><%= t('.dn') %></strong></td>
 	<td>
