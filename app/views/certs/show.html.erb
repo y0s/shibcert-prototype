@@ -80,7 +80,13 @@
 	<td>
 	  <%= form_tag({controller: "certs", action: "edit_memo_remote", id: @cert.id, }, remote: true, class: "form-inline") do %>
 	  <div class ="form-group">
-		<%= text_field :cert, :memo, placeholder: t('.memo_placeholder') %>
+		<% if @cert.purpose_type == 5 %>
+		<%= text_field :cert, :memo, placeholder: t('.memo_placeholder_personal') %>
+		<% elsif @cert.purpose_type == 7 %>
+		<%= text_field :cert, :memo, placeholder: t('.memo_placeholder_smime') %>
+		<% else #failssafe %>
+		<%= text_field :cert, :memo %>				
+		<% end %>
 		<%= submit_tag t('.memo_bt'), class:"btn btn-xs btn-default" %>
 	  </div>
 	  <% end %>

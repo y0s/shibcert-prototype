@@ -1,5 +1,9 @@
 <% if current_user %>
+<% ln = params[:locale] == 'ja' ? 'ja': 'en' %>
 <h3><%= t('.dashboard_title') %></h3>
+<br>
+<p><%= t('.dashboard_text')%></p>
+<p><%= SHIBCERT_CONFIG['label'][ln]['intro_text'] %></p>
 <br>
 <h4><%= t('.req_title') %></h4>
 <br>
@@ -9,11 +13,7 @@
 	<%= hidden_field :cert, :purpose_type, :value => 5 %>
 
 	<%= submit_tag(t('.req_bt', type: t('common.purpose_type.t5')), class: "btn btn-primary", data: {confirm: t('.confirm')}) %>
- 	<% if params[:locale] == 'ja' %>	
-	<%= SHIBCERT_CONFIG['label']['ja']['purpose'][5] if SHIBCERT_CONFIG['label']['ja']['purpose'][5] %>
-	<% else %>
-	<%= SHIBCERT_CONFIG['label']['en']['purpose'][5] if SHIBCERT_CONFIG['label']['ja']['purpose'][5] %>
-	<% end %>
+	<%= SHIBCERT_CONFIG['label'][ln]['purpose'][5] if SHIBCERT_CONFIG['label']['ja']['purpose'][5] %>
 	<% end %>
 	<br>
 	<%= form_tag({controller: "certs", action: "request_post"}, {class: "form-inline"}) do  %>
@@ -25,11 +25,7 @@
 	<%= t('common.purpose_type.t7') %>
 	</div>
 	<% end %>
- 	<% if params[:locale] == 'ja' %>	
-	<%= SHIBCERT_CONFIG['label']['ja']['purpose'][7] if SHIBCERT_CONFIG['label']['ja']['purpose'][7] %>
-	<% else %>
-	<%= SHIBCERT_CONFIG['label']['en']['purpose'][7] if SHIBCERT_CONFIG['label']['ja']['purpose'][7] %>
-	<% end %>
+	<%= SHIBCERT_CONFIG['label'][ln]['purpose'][7] if SHIBCERT_CONFIG['label']['ja']['purpose'][7] %>
  	<% if @smime_num > 0 %>
 	<%= t('.no_multi_smime') %>	
 	<% end %>

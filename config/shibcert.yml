@@ -1,21 +1,22 @@
 # shibcert.yml: shibcert application user-specific configuration
 
-
 label:
   ja:
-    site_title: "京都大学 個人証明書発行申請システム"
+    site_title: "京都大学 クライアント証明書発行申請システム"
     purpose:
-      # 4: Client Certification SHA1, 5: Client Certification SHA1
+      # 4: Personal Certification SHA1, 5: Client Certification SHA1
       # 6: S/MIME Certificatino SHA2, 7: S/MIME Certification SHA2
-      5: "学内ネットワーク(KUINS)認証用"  
-      7: "全学メール(KUMAIL,KUMOI)用"
+      5: "学内ネットワーク(KUINS) 接続用"  
+      7: "全学メール(KUMAIL,KUMOI) 署名・暗号化用"
+    intro_text: "クライアント証明書とは、PC・タブレット・スマートフォンなどのコンピュータにインストールして電子的な本人確認ができるようにするデジタル証明書です。京都大学では、無線LANサービスのKUINS-AirやPPTPなどのVPN接続に利用できる「個人証明書」と、Eメールの署名・暗号化用途で利用できる「S/MIME証明書」を提供しています。"
   en:
-    site_title: "Kyoto University Personal Certification Application System"  
+    site_title: "Client Certificate Issue Request System of Kyoto University"  
     purpose:
-      # 4: Client Certification SHA1, 5: Client Certification SHA2 
-      # 6: S/MIME Certificatino SHA2, 7: S/MIME Certification SHA2
-      5: "for Campus Netork(KUINS) Authentication"  
-      7: "for Campus Mail(KUMAIL, KUMOI)"
+      # 4: Personal Certificate SHA1, 5: Client Certification SHA2 
+      # 6: S/MIME Certificate SHA2, 7: S/MIME Certification SHA2
+      5: "for Connecting to Campus Network(KUINS)"  
+      7: "for Signing/Encrypting Campus Mail(KUMAIL, KUMOI)"
+    intro_text: "\"Client Certificate\" is a digital certificate for personal identification which can be installed on computers like PCs/tablets/smartphones. Kyoto University provides \"Personal Certificates\" and \"S/MIME Certificates\". Clients certificates can be used for connecting to the campus WiFi service (KUINS-Air) or the VPN service (PPTP), and S/MIME certificates can be used for signing or encrypting e-mails."
 
 production:
   certificate_file: "config/certificates/client.cer"
